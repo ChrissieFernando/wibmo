@@ -1,0 +1,136 @@
+.field {
+  width: 100%;
+  svg {
+    margin: 15px;
+    font-size: 12px;
+  }
+  .is-left {
+    svg {
+      margin: 15px;
+      font-size: 12px;
+    }
+  }
+}
+.label {
+  height: 17px;
+  display: flex;
+  margin-bottom: 0px !important;
+  color: #0062c4;
+  font-family: "rubiklight", sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: capitalize;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+  span {
+    display: none;
+  }
+  &.required {
+    span {
+      display: block;
+      margin-left: 5px;
+      color: $danger;
+    }
+  }
+}
+
+.secondary-label {
+  height: 0px;
+}
+.secondary-label {
+  margin-bottom: 0px !important;
+}
+.input {
+  height: 40px;
+  width: 100%;
+  margin-top: 10px;
+  padding-left: 15px;
+  border-radius: 2px;
+  color: #333333;
+  box-shadow: none;
+}
+.secondary-input {
+  &::placeholder {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+//checkcbox
+.checkbox__lable {
+  display: flex !important;
+  flex-direction: column;
+  padding: 2px 0px 0px 35px !important;
+  font-family: "rubikregular";
+  font-size: 16px !important;
+  line-height: 19px;
+}
+.group-name {
+  width: 100%;
+  font-size: 12px;
+  line-height: 14px;
+}
+.is-checkradio[type="checkbox"].is-small + label::before,
+.is-checkradio[type="checkbox"].is-small + label:before {
+  background-color: #fff;
+}
+.is-checkradio[type="checkbox"].is-warning:checked + label::before,
+.is-checkradio[type="checkbox"].is-warning:checked + label:before {
+  background-color: #ff9933;
+}
+.is-checkradio[type="checkbox"].is-warning:checked + label::after,
+.is-checkradio[type="checkbox"].is-warning:checked + label:after {
+  border-color: #fff !important;
+}
+//radio
+.radio-label {
+  padding: 2px 0px 0px 35px !important;
+  font-family: "rubikregular";
+  font-size: 16px !important;
+  line-height: 19px;
+}
+.is-danger {
+  color: $danger;
+  background-color: #ffebeb;
+}
+.is-success {
+  color: $success;
+  background-color: #f3ffda;
+}
+.input__msg {
+  display: none;
+  margin-left: 20px;
+  margin-top: 5px;
+  color: $danger;
+  font-family: "rubikregular";
+  font-size: 10px;
+  line-height: 12px;
+}
+.has-icons-right {
+  &.isgreen {
+    .input__msg {
+      color: $success;
+    }
+  }
+  .input__msg {
+    display: block;
+  }
+}
+.icon {
+  &.is-right {
+    margin-top: 7px;
+    margin-right: 20px;
+    &.green {
+      svg {
+        path {
+          fill: $success;
+        }
+      }
+    }
+    svg {
+      path {
+        fill: $danger;
+      }
+    }
+  }
+}

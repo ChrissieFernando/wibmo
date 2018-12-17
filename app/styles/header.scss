@@ -1,0 +1,93 @@
+//Header scss
+.header {
+  height: 70px;
+  padding-left: 30px;
+  box-shadow: 0 0 10px 0 rgba(141, 177, 213, 0.19);
+  &__right {
+    .level-item {
+      // height: 80px;
+      padding: 0px 37px;
+      border-left: 1px solid rgba(226, 227, 234, 0.5);
+    }
+  }
+  .menu {
+    margin-left: 8px;
+    &:hover {
+      border-color: transparent;
+    }
+  }
+  &.bankUser-header {
+    .level-right {
+      .level-item:nth-child(2) {
+        border-left-width: 0px;
+      }
+    }
+    .wibmo-dropdown {
+      display: none;
+    }
+  }
+}
+.brand {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  &__logo {
+    height: 100%;
+    margin-left: 25px;
+  }
+  &__name {
+    margin-left: 17px;
+    color: #00b8e0;
+    font-family: "arial_rounded_mt_boldbold", Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    line-height: 21px;
+    white-space: nowrap;
+  }
+}
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  &__copyright {
+    font-size: 10px;
+    line-height: 12px;
+  }
+  &__productof {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 10px;
+    line-height: 12px;
+    img {
+      margin-left: 5px;
+    }
+  }
+}
+.profile-img {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .brand-img {
+    margin-right: -35px;
+    margin-top: -10px;
+    border-radius: 2px;
+    background-color: #fff;
+  }
+}
+.img-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  margin-left: 5px;
+  margin-right: 30px;
+  border-radius: 2px;
+  background-color: #3399ff;
+  // box-shadow: 0 4px 10px 0 #C0E0FF;
+  img {
+    margin-right: 0px !important;
+  }
+}

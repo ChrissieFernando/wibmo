@@ -1,0 +1,47 @@
+//Colors
+$warning: #ff9933;
+$success: #17cb74;
+$danger: #f75157;
+$info: #6bd0f6;
+//Variables
+$input-color: #333333;
+// $input-border-color: #ffca96;
+$input-border-color: #dee2ed;
+// $input-radius: 2px;
+// $input-hover-border-color: #ffca96;
+// $input-focus-border-color: #ffca96;
+$input-hover-border-color: #3399ff;
+$input-focus-border-color: #3399ff;
+$input-focus-box-shadow-size: 0px;
+$input-disabled-border-color: #dee2ed;
+$input-disabled-background-color: #f9f9f9;
+//Button
+$button-static-border-color: #eeeeee;
+$button-static-color: #9facb8;
+//Dropdown
+$dropdown-content-radius: 4px;
+$dropdown-content-shadow: 0 0 10px 0 rgba(141, 177, 213, 0.19);
+$dropdown-divider-background-color: rgba(226, 227, 234, 0.5);
+//checkbox
+$checkbox-radius: 2px;
+$checkbox-border: 2px solid #ff9933;
+//Pagination
+$pagination-border-color: none;
+$pagination-hover-border-color: none;
+$pagination-focus-border-color: none;
+$pagination-active-border-color: none;
+$pagination-current-background-color: #3399ff;
+$pagination-current-border-color: none;
+//tabs
+$tabs-border-bottom-width: 3px;
+$tabs-border-bottom-color: #fff;
+$tabs-link-hover-border-bottom-color: #3399ff;
+$tabs-link-active-border-bottom-color: #3399ff;
+$tabs-link-active-color: #333333;
+$tabs-toggle-link-border-color: #dee2ed;
+$tabs-toggle-link-active-border-color: #3399ff;
+$tabs-toggle-link-hover-background-color: #3399ff;
+$tabs-toggle-link-active-background-color: #3399ff;
+//Modal
+$modal-content-width: 430px;
+$modal-z: 1001;

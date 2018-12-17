@@ -1,0 +1,222 @@
+.slider-control-centerright {
+  display: none;
+}
+.slider-control-centerleft {
+  display: none;
+}
+.column.login__right {
+  padding: 0rem;
+}
+
+/* .control.has-icons-left .icon.is-left {
+  padding-top: 10px;
+} */
+
+/*
+hr {
+  margin: 1rem 0px;
+} */
+
+/* .page {
+  overflow: scroll;
+} */
+.dropdown--type3 .button {
+  padding-left: 15px;
+}
+
+.button[disabled] {
+  background-color: #3399ff;
+  border-color: #dbdbdb;
+  box-shadow: none;
+  color: black;
+  opacity: 0.8;
+}
+.color-more {
+  color: 'blue';
+}
+.react-tagsinput {
+  padding-left: 15px;
+  border-radius: 2px;
+  border-color: #dee2ed;
+  /* box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1); */
+}
+.react-tagsinput:hover {
+  border-color: #33adff;
+}
+.react-tagsinput-tag {
+  background-color: #33adff;
+  border-radius: 2px;
+  border: 1px solid #dee2ed;
+  color: black;
+  border-radius: 2px;
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  padding: 5px;
+}
+.react-tagsinput--focused {
+  border-color: #33adff;
+}
+.react-tagsinput-remove {
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+
+.react-tagsinput-tag a::before {
+  content: ' ×';
+}
+
+.react-tagsinput-input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-radius: 2px;
+
+  color: rgba(0, 0, 0, 0.835);
+  font-family: sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 6px;
+  margin-top: 1px;
+  outline: none;
+  padding: 2px;
+  /* width: 75px; */
+}
+.react-tagsinput-input::placeholder {
+  color: #999999;
+  font-size: 16px;
+  line-height: 23px;
+  text-transform: lowercase;
+}
+/* .brand {
+  z-index: 1000;
+} */
+.dropdown-trigger-item {
+  text-transform: lowercase;
+}
+.header {
+  z-index: 100000;
+}
+.oval-N {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 0, 0, 0.877);
+  margin: 0 auto;
+}
+a img {
+  margin-right: 20px;
+}
+.svg-inline--fa.fa-w-10 {
+  width: 0.625em;
+  margin-top: 3px;
+}
+/* .dropdown.is-right .dropdown-menu {
+  left: -40px;
+} */
+.ant-calendar-range-picker-separator {
+  color: rgba(0, 0, 0, 0.45);
+  width: 10px;
+  /* display: inline-block; */
+  height: 100%;
+  vertical-align: middle !important;
+}
+
+.inline div {
+  -webkit-flex: 1; /* Safari 6.1+ */
+  -ms-flex: 1; /* IE 10 */
+  flex: 1;
+}
+/* .dropdown-trigger-item {
+  color: rgb(90, 86, 86);
+} */
+/*form */
+.field-string,
+.field-number {
+  width: 48%;
+  margin-right: 2%;
+  display: inline-block;
+}
+
+/* .input-group-btn {
+  margin-left: 5px;
+} */
+.form-group {
+  margin-bottom: 25px !important;
+}
+.marginRight {
+  margin-right: 4%;
+}
+.marginRight_10 {
+  margin-right: 10%;
+}
+.react-tagsinput-input {
+  text-transform: lowercase !important;
+}
+.marginRight_20 {
+  margin-right: 20%;
+}
+.customwidth_23 {
+  width: 23%;
+  margin-right: 2%;
+  display: inline-block;
+}
+.customwidth_33 {
+  width: 35%;
+  margin-right: 2%;
+  display: inline-block;
+}
+.customwidth_13 {
+  width: 11%;
+  margin-right: 2%;
+  display: inline-block;
+}
+
+.field-array {
+  width: 48%;
+  margin-right: 2%;
+  margin-bottom: 20px;
+  /* display: inline-block; */
+}
+.customwidth_95 {
+  width: 75%;
+  margin-right: 2%;
+  display: inline-block;
+}
+.customwidth_40 {
+  width: 40%;
+  margin-right: 2%;
+  display: inline-block;
+}
+.customwidth_100 {
+  width: 98%;
+  margin-right: 2%;
+  display: inline-block;
+}
+svg.nav-icon path {
+  fill: #98a1b0;
+}
+svg.expand-icon {
+  margin-left: 5px;
+}
+.daterangepicker .drp-buttons {
+  display: flex !important;
+  align-items: center;
+}
+.drp-selected {
+  margin-left: 10px;
+  color: #3399ff;
+}
+.padding-btn {
+  height: 30px !important;
+  padding: 0px 20px !important;
+  font-weight: normal !important;
+}
+.daterangepicker td.active,
+.daterangepicker td.active:hover {
+  background-color: #3399ff;
+}

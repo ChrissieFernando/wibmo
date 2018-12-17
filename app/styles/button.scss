@@ -1,0 +1,391 @@
+//Button css
+.button {
+  display: flex;
+  height: 40px;
+  // width: 100%;
+  padding: 5px 45px;
+  border-width: 0px;
+  border-radius: 50px;
+  font-family: "rubikmedium";
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: uppercase;
+  color: #fff;
+
+  .button__icon {
+    display: none;
+  }
+  //Button with icon
+  &.is-withIcon {
+    padding-right: 5px;
+    .button__icon {
+      height: 30px;
+      width: 30px;
+      display: block;
+      margin-left: 20px;
+      padding: 3px;
+      border-radius: 100%;
+      background-color: rgba(10, 91, 255, 1);
+      svg {
+        path {
+          fill: #fff;
+          width: 1.3rem;
+        }
+      }
+    }
+  }
+}
+//Primary button css
+.primary-btn {
+  box-shadow: 0 4px 10px 0 #c0e0ff;
+  background-color: #3399ff;
+  color: #fff !important;
+
+  &:hover {
+    color: #fff;
+  }
+}
+//Secondary button css
+.secondary-btn {
+  border-width: 1px;
+  box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.14);
+  color: #5b5b5b;
+  border-color: #dee2ed;
+
+  &:hover {
+    color: #5b5b5b;
+    border-color: #dee2ed;
+  }
+}
+
+//Dropdown
+.dropdown {
+  &__badges {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  &__link {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    a {
+      color: #ff9933;
+      font-size: 12px;
+      line-height: 14px;
+      &:hover {
+        color: #ff9933;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .divider {
+    margin: 15px 10px;
+  }
+  // &-content {
+  //   box-shadow: none;
+  // }
+  &__footer {
+    padding: 0px 10px;
+  }
+  &-trigger {
+    outline: 0;
+
+    &-item {
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      // padding: 0px 15px;
+      color: #bebebe;
+      font-size: 16px;
+      line-height: 19px;
+      text-transform: capitalize;
+    }
+    .icon {
+      color: #3399ff;
+    }
+  }
+  // .button {
+  //   border-width: 0px;
+  //   &:focus {
+  //     box-shadow: none;
+  //   }
+  // }
+  &-btn {
+    // margin-top: 10px;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 0px;
+    border-radius: 2px;
+    border: 1px solid #dee2ed;
+    &:hover {
+      border: 1px solid #3399ff;
+    }
+    &:focus {
+      border: 1px solid #3399ff;
+    }
+    svg {
+      path {
+        fill: #3399ff;
+      }
+    }
+    & .dropdown__icon {
+      display: block;
+    }
+    & .dropdown-trigger-item {
+      display: block;
+    }
+  }
+  &-menu {
+    min-width: 300px;
+    max-height: 410px;
+    border-width: 0px;
+    padding: 0px;
+    //Dropdown menu  profile in header
+    &.dropdown--profile {
+      min-width: 190px;
+      margin-left: 40px;
+      .dropdown-item--profile {
+        display: flex;
+        flex-direction: column;
+        padding-left: 10px;
+      }
+      .name {
+        color: #3b456e;
+        font-family: "rubikregular";
+        font-size: 16px;
+        line-height: 19px;
+      }
+      .description {
+        font-size: 12px !important;
+        line-height: 14px !important;
+      }
+      .dropdown-content {
+        padding: 15px;
+      }
+      .dropdown-item {
+        span {
+          font-size: 14px;
+          line-height: 17px;
+        }
+        &.text-red {
+          span {
+            color: #f75157;
+          }
+          &:hover {
+            span {
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+    &.shift-left {
+      margin-left: -80px;
+    }
+  }
+  &-filter-item {
+    font-size: 14px;
+    margin-right: 10px;
+    @media (max-width: 1366px) {
+      font-size: 12px;
+    }
+  }
+  &-header-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 20px;
+    margin-right: 20px;
+
+    .text-blue {
+      text-transform: capitalize;
+    }
+  }
+  &-content {
+    padding: 20px;
+    &-content--header {
+      max-height: 400px;
+      padding: 20px;
+      overflow: hidden;
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #fff;
+        box-shadow: none !important;
+        outline: 0;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 25px;
+        background-color: #e2e3ea;
+      }
+    }
+  }
+  &__title {
+    color: #0062c4;
+    font-family: "rubikregular";
+    font-size: 14px;
+    line-height: 17px;
+
+    span {
+      margin-left: 5px;
+      color: #f75157;
+      font-size: 16px;
+    }
+  }
+  a {
+    svg {
+      path {
+        fill: #3399ff;
+      }
+    }
+    &.dropdown-item {
+      display: flex;
+      align-items: center;
+      padding: 9px 8px;
+      .brand__image {
+        height: 30px;
+        width: 30px;
+      }
+
+      &:hover {
+        border-radius: 4px;
+        color: #fff;
+        background-color: #3399ff;
+        box-shadow: 0 4px 10px 0 #c0e0ff;
+      }
+      img {
+        margin-right: 20px;
+      }
+      span {
+        font-family: "rubikregular";
+        font-size: 16px;
+        line-height: 19px;
+      }
+    }
+  }
+}
+.text__link {
+  margin-left: 30px;
+  font-family: "rubikregular";
+  font-size: 16px;
+  line-height: 19px;
+}
+.dropdown__icon {
+  display: none;
+}
+//Dropdown type 3
+.dropdown--type3 {
+  width: 100%;
+  margin-top: 10px;
+  .dropdown-btn {
+    & .dropdown__icon {
+      display: block;
+    }
+    & .dropdown-trigger-item {
+      display: block;
+      max-width: 90%;
+      overflow: hidden;
+    }
+  }
+  .dropdown-item {
+    padding: 10px 0px;
+  }
+  .dropdown-trigger {
+    min-width: 100%;
+    span {
+      font-family: "rubikregular";
+    }
+  }
+  .dropdown-menu {
+    width: 100%;
+  }
+  .dropdown-content {
+    max-height: 423px;
+    // min-width: 385px;
+    padding: 10px;
+    overflow: visible;
+    border-width: 0px;
+  }
+}
+//Dropdown type 4
+.dropdown--type4 {
+  min-width: 134px;
+  // margin-top: 10px;
+  .dropdown-btn {
+    font-family: "rubikregular";
+    svg {
+      path {
+        fill: #3399ff;
+      }
+    }
+    & .dropdown__icon {
+      display: block;
+    }
+    & .dropdown-trigger-item {
+      display: block;
+    }
+  }
+  .dropdown-trigger {
+    &-item {
+      padding: 0px 5px 0px 15px;
+    }
+    span {
+      color: #5b5b5b;
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+  .dropdown-content {
+    max-width: 144px;
+    padding: 10px;
+    border-width: 0px;
+    border-radius: 0px;
+  }
+  .dropdown-item {
+    padding: 10px 0px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
+//Dropdown type 4
+// .dropdown--type4 {
+//   min-width: 134px;
+//   .button {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     padding-left: 0px;
+//     border-radius: 2px;
+//     border: 1px solid #dee2ed;
+//     font-family: "rubikregular";
+//   }
+//   .dropdown-trigger {
+//     span {
+//       color: #5b5b5b;
+//       font-size: 14px;
+//       line-height: 17px;
+//     }
+//   }
+//   .dropdown-content {
+//     max-width: 144px;
+//     padding: 10px;
+//     border-width: 0px;
+//     border-radius: 0px;
+//   }
+//   .dropdown-item {
+//     padding: 10px 0px;
+//     font-size: 14px;
+//     line-height: 17px;
+//   }
+// }
