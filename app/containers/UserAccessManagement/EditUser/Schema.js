@@ -1,3 +1,5 @@
+import { getAllBanks } from '../../../utils/requestUrl';
+
 export default {
   title: 'Edit User',
   schema: {
@@ -9,7 +11,7 @@ export default {
       'MobileCode',
       'MobileNumber',
       // "EmailID",
-      'BankName',
+      // "BankName",
       'Status',
     ],
     properties: {
@@ -30,14 +32,15 @@ export default {
       },
       MobileCode: {
         title: 'Code',
-        type: 'string',
-        minLength: 2,
-        enum: ['+ 91'],
+        // type: "string",
+        // minLength: 2,
+        enum: [91, 1, 33, 49],
+        enumNames: ['+ 91', '+ 1', '+ 33', '+ 49'],
         // maxLength: 10
       },
       MobileNumber: {
         title: 'Mobile Number',
-        type: 'string',
+        type: 'number',
         // minLength: 10,
         // maxLength: 10
       },
@@ -59,17 +62,17 @@ export default {
       Status: {
         title: 'Status',
         type: 'string',
-        enum: ['1', '0'],
+        enum: ['Active', 'Inactive'],
         enumNames: ['Active', 'Inactive'],
       },
-      Products: {
+      BankList: {
         type: 'array',
-        title: 'Products',
-        minItems: 2,
+        title: 'Bank list',
+        // minItems: 2,
         items: {
-          type: 'string',
+          // type: "number",
           enum: [''],
-          enumNames: ['Select a bank to choose products'],
+          enumNames: ['No Data Available'],
         },
         uniqueItems: true,
       },
@@ -77,8 +80,6 @@ export default {
   },
   formData: {
     Products: [],
-    MobileCode: '+ 91',
-    FirstName: 'chrissie',
   },
   uiSchema: {
     'ui:order': [
@@ -90,7 +91,7 @@ export default {
       'EmailID',
       'BankName',
       'Status',
-      'Products',
+      'BankList',
       '*',
     ],
     FirstName: {
@@ -135,7 +136,7 @@ export default {
       classNames: 'customwidth_13',
       'ui:options': {
         type: 'text',
-        disable: true,
+        // disable: true
       },
     },
     EmailID: {
@@ -166,7 +167,7 @@ export default {
     // multipleChoicesList: {
     //   "ui:widget": "CustomMultiSelectWidget"
     // },
-    Products: {
+    BankList: {
       'ui:widget': 'CustomMultiSelectWidgetWithSearch',
       'ui:options': {
         required: true,
@@ -175,9 +176,14 @@ export default {
   },
   api: [
     {
-      url: 'https://3ds2-ui-acsdemo-bdc1.enstage-uat.com/admin/uam/v1/banks',
+      url: getAllBanks,
       type: 'dropdown',
       key: 'BankName',
+    },
+    {
+      url: getAllBanks,
+      type: 'multiselect',
+      key: 'BankList',
     },
   ],
   post: '',
