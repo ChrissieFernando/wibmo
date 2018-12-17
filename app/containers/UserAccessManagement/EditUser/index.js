@@ -6,6 +6,6 @@ export default class componentName extends Component {
   componentDidMount() {}
 
   render() {
-    return <EditUser jsonSchema={Schema} />;
+    return <EditUser jsonSchema={Schema} {...this.props} />;
   }
 }

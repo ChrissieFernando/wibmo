@@ -111,6 +111,7 @@ class Header extends Component {
                       this.props.history.location.pathname !==
                         '/dashboard/rba-configuration' &&
                       this.props.profile &&
+                      this.props.profile.userBankList &&
                       this.props.profile.userBankList.length > 1 &&
                       this.setState({
                         dropdownVisible: !this.state.dropdownVisible,
@@ -128,6 +129,7 @@ class Header extends Component {
                     this.props.history.location.pathname !==
                       '/dashboard/rba-configuration' &&
                     this.props.profile &&
+                    this.props.profile.userBankList &&
                     this.props.profile.userBankList.length > 1 && (
                       <Icon
                         path={mdiChevronDown}
@@ -163,7 +165,6 @@ class Header extends Component {
                       {this.props.profile &&
                         this.props.profile.userBankList &&
                         [
-                          // { bank_id: "", bank_name: "Wibmo" },
                           ...(this.props.profile &&
                             this.props.profile.userBankList),
                         ]
