@@ -1,4 +1,4 @@
-import { getAllBanks } from '../../../utils/requestUrl';
+import { GET_ALL_BANKS } from '../../../utils/requestUrl';
 
 export default {
   title: 'Create User',
@@ -177,12 +177,12 @@ export default {
   },
   api: [
     {
-      url: getAllBanks,
+      url: GET_ALL_BANKS,
       type: 'dropdown',
       key: 'BankName',
     },
     {
-      url: getAllBanks,
+      url: GET_ALL_BANKS,
       type: 'multiselect',
       key: 'BankList',
     },

@@ -33,8 +33,6 @@ export const RBA_CONFIG = id =>
 
 export const RBA_API = `${SAS_ADMIN_URL_BASE}/admin/report/v1/update-rba-script/doUpdateRBAScript`;
 
-export const getAllBanks = `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/banks`;
-
 export const GET_BANK_PRODUCTS = id =>
   `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/banks/${id}/products`;
 
