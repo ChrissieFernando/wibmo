@@ -210,6 +210,8 @@ class HomePage extends Component {
     this.myRef.current.onSubmit(e);
   };
 
+  change = () => {};
+
   render() {
     return (
       <div className="main">
@@ -266,23 +268,13 @@ class HomePage extends Component {
                   />
                 ) : (
                   <div style={{ marginLeft: '2%' }}>
-                    {this.state.toggle ? (
-                      <JsonForm
-                        schema={this.state.schema}
-                        submit={this.submit}
-                        ref={this.myRef}
-                        form={this.form}
-                        change={this.change}
-                      />
-                    ) : (
-                      <JsonForm
-                        schema={this.state.schema}
-                        submit={this.submit}
-                        ref={this.myRef}
-                        form={this.form}
-                        change={this.change}
-                      />
-                    )}
+                    <JsonForm
+                      schema={this.state.schema}
+                      submit={this.submit}
+                      ref={this.myRef}
+                      form={this.form}
+                      change={this.change}
+                    />
                   </div>
                 )}
               </div>

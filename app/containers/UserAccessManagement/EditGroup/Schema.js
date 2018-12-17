@@ -1,3 +1,5 @@
+import { getAllBanks } from '../../../utils/requestUrl';
+
 export default {
   title: 'Edit Group',
   schema: {
@@ -17,7 +19,7 @@ export default {
 
       BankID: {
         title: 'Bank ID',
-        type: 'string',
+        type: 'number',
       },
       BankName: {
         title: 'Bank Name',
@@ -26,7 +28,7 @@ export default {
       },
       Products: {
         title: 'Products',
-        type: 'string',
+        type: 'number',
         enum: [''],
         enumNames: ['Choose a bank first to select Products'],
       },
@@ -35,7 +37,7 @@ export default {
         title: 'Permissions List',
         // minItems: 2,
         items: {
-          type: 'string',
+          type: 'number',
           enum: [''],
           enumNames: ['Select a Product to choose Permissions List'],
         },
@@ -86,12 +88,14 @@ export default {
       'ui:widget': 'CustomDropdownWidget',
       'ui:options': {
         required: true,
+        disable: true,
       },
     },
     BankName: {
       'ui:widget': 'CustomDropdownWidget',
       'ui:options': {
         required: true,
+        disable: true,
       },
     },
     // multipleChoicesList: {
@@ -107,7 +111,7 @@ export default {
   },
   api: [
     {
-      url: 'https://3ds2-ui-acsdemo-bdc1.enstage-uat.com/admin/uam/v1/banks',
+      url: getAllBanks,
       type: 'dropdown',
       key: 'BankName',
     },
