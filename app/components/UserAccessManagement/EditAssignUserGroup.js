@@ -6,12 +6,18 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import PropTypes from 'prop-types';
+import Loader from 'react-loader-spinner';
+
 import Button from '../common/Button';
 import Header from '../common/Header';
 import Sidebar from '../common/Sidebar';
 import Footer from '../common/footer';
 import JsonForm from '../common/JsonSchema/form';
-import { EDIT_ASSIGN_GROUP_USERS_URL } from '../../utils/requestUrl';
+import {
+  EDIT_ASSIGN_GROUP_USERS_URL,
+  GET_BANK_USER_GROUP,
+  GET_GROUP_USERS,
+} from '../../utils/requestUrl';
 // import Notification from "../components/common/notification";
 
 class HomePage extends Component {
@@ -28,7 +34,6 @@ class HomePage extends Component {
       errorType: '',
     };
   }
-
   execute = Json => {
     const json = { ...Json };
     const dropdownUrl = json.api;
@@ -37,28 +42,28 @@ class HomePage extends Component {
     dropdownUrl.map((urldata, i) => {
       temp[i] = Axios.get(urldata.url)
         .then(response => {
-          if (response.data.responseCode === '200') {
+          if (
+            response.data.responseCode === '200' ||
+            response.data.length > 0
+          ) {
             if (urldata.key === 'BankName')
               return response.data.listOfBank.map(bank => ({
                 id: bank.bank_id,
                 title: bank.bankName,
               }));
             if (urldata.key === 'Users')
-              return response.data.userList.map(product => ({
-                id: product.userId,
-                title: `${product.firstName} ${product.lastName}`,
+              return response.data.map(user => ({
+                id: user.userId,
+                title: `${user.firstName} ${user.lastName}`,
+              }));
+            if (urldata.key === 'GroupName')
+              return response.data.map(group => ({
+                id: group.groupId,
+                title: group.groupName,
               }));
             return response.data.map(other => ({
               id: other.title,
               title: other.title,
-            }));
-          }
-          if (urldata.key === 'Users') {
-            if (response.data.length === 0)
-              return [{ id: '', title: 'No Data Available' }];
-            return response.data.map(product => ({
-              id: product.productId,
-              title: product.productCode,
             }));
           }
           return [{ id: '', title: response.data.responseDesc }];
@@ -85,7 +90,6 @@ class HomePage extends Component {
         }
         return null;
       });
-      // console.log(schema);
       json.schema = schema;
       json.time = new Date();
       this.setState({
@@ -106,9 +110,16 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    // setTimeout(() => {
-    this.execute(this.props.jsonSchema);
-    // }, 1000);
+    const { jsonSchema } = this.props;
+    jsonSchema.api = jsonSchema.api.concat([
+      {
+        url: GET_BANK_USER_GROUP(8111),
+        type: 'dropdown',
+        key: 'GroupName',
+      },
+    ]);
+
+    this.execute(jsonSchema);
   }
 
   form = formData => {
@@ -117,6 +128,8 @@ class HomePage extends Component {
 
     // TODO: Add other auth dependent params
     // TODO: Move URL to config
+
+    // TODO: Remove hardcoded data
 
     const PAYLOAD = {
       created_by: 'panditji5',
@@ -163,7 +176,7 @@ class HomePage extends Component {
     //   }]
     // }
 
-    Axios.post(EDIT_ASSIGN_GROUP_USERS_URL(8111), PAYLOAD)
+    Axios.post(EDIT_ASSIGN_GROUP_USERS_URL(1000), PAYLOAD)
       .then(response => {
         if (response.status == 200 || response.status == 201) {
           if (response.data.responseCode == '200') {
@@ -203,7 +216,7 @@ class HomePage extends Component {
   };
 
   change = e => {
-    if (e.formData.BankName !== this.state.bank_id) {
+    if (e.formData.GroupName !== this.state.bank_id) {
       this.setState(
         {
           schema: {
@@ -223,31 +236,30 @@ class HomePage extends Component {
               },
             },
           },
+          bank_id: e.formData.GroupName,
           index: this.state.index + 1,
         },
         () => {
-          // setTimeout(() => {
           this.execute({
             ...this.state.schema,
             formData: { ...e.formData, Users: [] },
             api: [
               {
-                url: `https://3ds2-ui-acsdemo-bdc1.enstage-uat.com/admin/uam/v1/admin/users/${
-                  e.formData.BankName
-                }/getbankusers?limit=11&skip=10`,
+                // TODO: Remove hardcoded data
+                url: GET_GROUP_USERS(
+                  e.formData.BankName || 8111,
+                  e.formData.GroupName,
+                ),
                 type: 'multiselect',
                 key: 'Users',
               },
             ],
           });
-          // }, 500000);
         },
       );
     }
-    // this.execute(DummyJson);
   };
   render() {
-    // console.log(this.state.schema);
     return (
       <div className="main">
         <Header />
@@ -266,20 +278,13 @@ class HomePage extends Component {
                 {
                   <div className="level-right">
                     <div className="level-item width-100">
-                      <Button
-                        type="secondary"
-                        label="Cancel"
-                        fullwidth
-                        // link="createbank"
-                        // onClick={() => console.log(this.props.history.goBack())}
-                      />
+                      <Button type="secondary" label="Cancel" fullwidth />
                     </div>
                     <div className="level-item width-100">
                       <Button
                         type="primary"
                         label="Update Group"
                         fullwidth
-                        // link="managebank"
                         click={e => {
                           e.preventDefault();
                           this.submit(e);
@@ -291,11 +296,16 @@ class HomePage extends Component {
               </div>
               <div
                 className="page__content"
-                style={{ height: '70vh', overflow: 'scroll' }}
+                style={{ minHeight: '70vh', overflow: 'scroll' }}
               >
                 {/* <Link to="/admin/dashboard/custom/3">admin</Link> */}
                 {this.state.loader ? (
-                  <div>loading....</div>
+                  <Loader
+                    type="Puff"
+                    color="#00BFFF"
+                    height="100"
+                    width="100"
+                  />
                 ) : (
                   <div style={{ marginLeft: '2%' }}>
                     <JsonForm
@@ -317,7 +327,6 @@ class HomePage extends Component {
     );
   }
 }
-
 export default HomePage;
 HomePage.propTypes = {
   jsonSchema: PropTypes.object,

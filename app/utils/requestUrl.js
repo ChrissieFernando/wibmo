@@ -68,6 +68,9 @@ export const EDIT_USER_URL = id =>
 
 export const BANK_CREATE_URL = `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/createBank`;
 
+export const GET_BANK_BY_ID = id =>
+  `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/banks/${id}`;
+
 export const BANK_EDIT_URL = id =>
   `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/${id}/updateBank`;
 
@@ -78,3 +81,11 @@ export const EDIT_GROUP_URL = id =>
 
 export const GET_GROUP_PERMISSIONS = id =>
   `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/${id}/getGroupPermissions`;
+
+export const GET_GROUP_BY_ID = id =>
+  `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/${id}/getGroupById`;
+
+export const GET_USER_BY_ID = id =>
+  `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/users/${id}/getBankUserById`;
+
+export const GET_ALL_BANKS = `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/banks`;

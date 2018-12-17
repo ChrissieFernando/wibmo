@@ -4,13 +4,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
+import Loader from 'react-loader-spinner';
+
 import Button from '../common/Button';
 import Header from '../common/Header';
 import Sidebar from '../common/Sidebar';
 import Footer from '../common/footer';
 import JsonForm from '../common/JsonSchema/form';
 import Notification from '../common/notification';
-import { EDIT_USER_URL } from '../../utils/requestUrl';
+import {
+  EDIT_USER_URL,
+  GET_ALL_BANKS,
+  GET_USER_BY_ID,
+} from '../../utils/requestUrl';
 
 class HomePage extends Component {
   constructor(props) {
@@ -20,10 +26,13 @@ class HomePage extends Component {
       loader: true,
       schema: {},
       bank_id: '',
+      // userId: '',
       index: 1,
+      // banks: {},
       show: false,
       title: '',
       errorType: '',
+      // userDetails: {},
     };
   }
 
@@ -41,11 +50,16 @@ class HomePage extends Component {
                 id: bank.bank_id,
                 title: bank.bankName,
               }));
-            if (urldata.key === 'Products')
-              return response.data.listOfProducts.map(product => ({
-                id: product.productId,
-                title: product.productCode,
-              }));
+            if (urldata.key === 'BankList')
+              return (
+                response.data.listOfBank
+                  .filter(data => data.bankParentId === 1000)
+                  // .map(data => console.log(data))
+                  .map(bank => ({
+                    id: bank.bank_id,
+                    title: bank.bankName,
+                  }))
+              );
             return response.data.map(other => ({
               id: other.title,
               title: other.title,
@@ -75,7 +89,6 @@ class HomePage extends Component {
         }
         return null;
       });
-      // console.log(schema);
       json.schema = schema;
       json.time = new Date();
       this.setState({
@@ -87,12 +100,6 @@ class HomePage extends Component {
     });
   };
 
-  componentDidMount() {
-    // setTimeout(() => {
-    this.execute(this.props.jsonSchema);
-    // }, 1000);
-  }
-
   endNotification = () => {
     this.setState({
       show: false,
@@ -101,12 +108,92 @@ class HomePage extends Component {
     });
   };
 
-  form = formData => {
-    // eslint-disable-next-line no-console
-    console.log(formData);
+  componentDidMount() {
+    const { jsonSchema } = this.props;
+    const Json = { ...jsonSchema };
 
+    // eslint-disable-next-line react/prop-types
+    const userId = this.props.match.params.user_id;
+
+    Axios.get(GET_USER_BY_ID(userId))
+      .then(response => {
+        if (response.status == 200 || response.status == 201) {
+          if (response.data.responseCode == '200' || response.data.success) {
+            Json.formData = {
+              FirstName:
+                (response.data.updatedObject &&
+                  response.data.updatedObject.firstName) ||
+                '',
+              LastName:
+                (response.data.updatedObject &&
+                  response.data.updatedObject.lastName) ||
+                '',
+              LoginID:
+                (response.data.updatedObject &&
+                  response.data.updatedObject.userId) ||
+                '',
+              MobileCode:
+                (response.data.updatedObject &&
+                  response.data.updatedObject.telCountryCode) ||
+                '',
+              MobileNumber:
+                (response.data.updatedObject &&
+                  response.data.updatedObject.telMobile) ||
+                '',
+              EmailID:
+                (response.data.updatedObject &&
+                  response.data.updatedObject.email) ||
+                '',
+              BankName:
+                (response.data.updatedObject &&
+                  response.data.updatedObject.bankId) ||
+                '',
+              BankList:
+                (response.data.updatedObject &&
+                  response.data.updatedObject.userBankList.map(
+                    data => data.BANK_ID,
+                  )) ||
+                [],
+              Status:
+                (response.data.updatedObject &&
+                  response.data.updatedObject.status) ||
+                '',
+            };
+            this.execute(Json);
+          } else {
+            this.setState({
+              delay: 2000,
+              show: true,
+              title: response.data.responseDesc,
+              errorType: 'danger',
+            });
+            this.execute(Json);
+          }
+        }
+      })
+      .catch(error => {
+        if (error.response.status === 500) {
+          this.setState({
+            delay: 2000,
+            show: true,
+            title: 'Internal Server Error',
+            errorType: 'danger',
+          });
+        }
+        if (error.response.status === 404) {
+          this.setState({
+            show: true,
+            title: 'Server Error',
+            errorType: 'danger',
+          });
+        }
+      });
+  }
+
+  form = formData => {
     // TODO: Add other auth dependent params
     // TODO: Move URL to config
+
     const PAYLOAD = {
       USER_ID: formData.LoginID,
       BANK_ID: '8111',
@@ -130,6 +217,7 @@ class HomePage extends Component {
             });
           } else {
             this.setState({
+              delay: 2000,
               show: true,
               title: response.data.responseDesc,
               errorType: 'danger',
@@ -138,15 +226,17 @@ class HomePage extends Component {
         }
       })
       .catch(error => {
-        if (error.response && error.response.status === 500) {
+        if (error.response.status === 500) {
           this.setState({
+            delay: 2000,
             show: true,
             title: 'Internal Server Error',
             errorType: 'danger',
           });
         }
-        if (error.response && error.response.status === 404) {
+        if (error.response.status === 404) {
           this.setState({
+            delay: 2000,
             show: true,
             title: 'Server Error',
             errorType: 'danger',
@@ -184,29 +274,23 @@ class HomePage extends Component {
           index: this.state.index + 1,
         },
         () => {
-          // setTimeout(() => {
           this.execute({
             ...this.state.schema,
             formData: { ...e.formData, Products: [] },
             api: [
               {
-                url: `https://3ds2-ui-acsdemo-bdc1.enstage-uat.com/admin/uam/v1/banks/${
-                  e.formData.BankName
-                }/products`,
+                url: GET_ALL_BANKS,
                 type: 'multiselect',
                 key: 'Products',
               },
             ],
           });
-          // }, 500000);
         },
       );
     }
-    // this.execute(DummyJson);
   };
 
   render() {
-    // console.log(this.state.schema);
     return (
       <div className="main">
         <Header history={this.props.history} />
@@ -214,6 +298,7 @@ class HomePage extends Component {
           show={this.state.show}
           title={this.state.title}
           type={this.state.errorType}
+          delay={this.state.delay}
           endCallback={this.endNotification}
         />
         <div className="main__body">
@@ -231,20 +316,13 @@ class HomePage extends Component {
                 {
                   <div className="level-right">
                     <div className="level-item width-100">
-                      <Button
-                        type="secondary"
-                        label="Cancel"
-                        fullwidth
-                        // link="createbank"
-                        // onClick={() => console.log(this.props.history.goBack())}
-                      />
+                      <Button type="secondary" label="Cancel" fullwidth />
                     </div>
                     <div className="level-item width-100">
                       <Button
                         type="primary"
-                        label="Update User"
+                        label="Edit User"
                         fullwidth
-                        // link="managebank"
                         click={e => {
                           e.preventDefault();
                           this.submit(e);
@@ -256,11 +334,15 @@ class HomePage extends Component {
               </div>
               <div
                 className="page__content"
-                style={{ height: '70vh', overflow: 'scroll' }}
+                style={{ minHeight: '70vh', overflow: 'scroll' }}
               >
-                {/* <Link to="/admin/dashboard/custom/3">admin</Link> */}
                 {this.state.loader ? (
-                  <div>loading....</div>
+                  <Loader
+                    type="Puff"
+                    color="#00BFFF"
+                    height="100"
+                    width="100"
+                  />
                 ) : (
                   <div style={{ marginLeft: '2%' }}>
                     <JsonForm

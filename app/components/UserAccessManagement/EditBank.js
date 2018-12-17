@@ -6,6 +6,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
+import Loader from 'react-loader-spinner';
+
 import Button from '../common/Button';
 import Header from '../common/Header';
 import Sidebar from '../common/Sidebar';
@@ -13,7 +15,11 @@ import Footer from '../common/footer';
 import JsonForm from '../common/JsonSchema/form';
 // import DummyJson from '../jsonSchema/createBank';
 import Notification from '../common/notification';
-import { BANK_EDIT_URL } from '../../utils/requestUrl';
+import {
+  BANK_EDIT_URL,
+  GET_BANK_PRODUCTS,
+  GET_BANK_BY_ID,
+} from '../../utils/requestUrl';
 
 class HomePage extends Component {
   constructor(props) {
@@ -27,6 +33,7 @@ class HomePage extends Component {
       show: false,
       title: '',
       errorType: '',
+      bankId: '',
     };
     this.state = {
       bucket: false,
@@ -88,36 +95,75 @@ class HomePage extends Component {
       });
     });
   };
+
   // UNSAFE_componentWillReceiveProps(props) {}
-
   componentDidMount() {
-    // setTimeout(() => {
-    this.execute(this.props.jsonSchema);
-    // }, 1000);
-  }
+    const { jsonSchema } = this.props;
+    // eslint-disable-next-line react/prop-types
+    const bankId = this.props.match.params.id;
+    jsonSchema.api = [
+      {
+        // TODO: Remove hardcoded data
+        url: GET_BANK_PRODUCTS(8111),
+        type: 'multiselect',
+        key: 'Products',
+      },
+    ];
+    const GET_BANK_DETAILS = GET_BANK_BY_ID(bankId);
 
-  notify() {
-    this.setState({
-      show: true,
-      title: 'Please fill all the required fields',
-      errorType: 'danger',
-    });
+    Axios.get(GET_BANK_DETAILS)
+      .then(response => {
+        if (response.status == 200 || response.status == 201) {
+          if (response.data.responseCode == '200') {
+            jsonSchema.formData = {
+              ParentEntityName:
+                (response.data.bankDetails &&
+                  response.data.bankDetails.parentBankEntity) ||
+                '',
+              BankName:
+                response.data.bankDetails && response.data.bankDetails.bankName,
+              BankID:
+                response.data.bankDetails && response.data.bankDetails.bank_id,
+              // Currency: response.data.bankDetails,
+              // Buckets: response.data.bankDetails,
+              // BankLogoURL: response.data.bankDetails,
+              // Products: response.data.bankDetails
+              Products: ['1', '2'],
+            };
+            this.execute(jsonSchema);
+          } else {
+            this.setState({
+              show: true,
+              title: response.data.responseDesc,
+              errorType: 'danger',
+            });
+            this.execute(jsonSchema);
+          }
+        }
+      })
+      .catch(error => {
+        if (error.response.status === 500) {
+          this.setState({
+            show: true,
+            title: 'Internal Server Error',
+            errorType: 'danger',
+          });
+        }
+        if (error.response.status === 404) {
+          this.setState({
+            show: true,
+            title: 'Server Error',
+            errorType: 'danger',
+          });
+        }
+      });
   }
-
-  endNotification = () => {
-    this.setState({
-      show: false,
-      title: '',
-      errorType: '',
-    });
-  };
 
   form = formData => {
     // eslint-disable-next-line no-console
     console.log(formData);
 
     // TODO: Add other auth dependent params
-    // TODO: Move URL to config
 
     // const PAYLOAD = {
     //   token_id: "auth007",
@@ -132,20 +178,31 @@ class HomePage extends Component {
     // };
 
     const PAYLOAD = {
-      token_id: 'auth007',
-      login_id: 'Shivnath@wibmo.com',
-
+      uuid: '0003',
       bank_id: 8111,
-      bankCode: 'test',
-      bankName: 'adiba Bank',
-      bankCurrency: 800,
-      bankType: 'Custom Bucket 3',
-      parentBank_id: 1000,
-      status: 'Active',
-
-      bucket: 'Bucket 3',
-      bankLogoUrl: '/opt/accosa/bankId/',
-      product_id: [1, 2],
+      maker_id: 'adminaxis',
+      product_id: 1,
+      bankCode: 'HDFC',
+      bankName: 'HDFC BANK',
+      productCode: 'ACS',
+      screen_id: 123,
+      previousDataJson: {},
+      newDataJson: {
+        token_id: 'auth007',
+        login_id: 'Shivnath@wibmo.com',
+        bankName: formData.BankName,
+        bankCode: formData.BankCode,
+        bank_id: formData.BankID,
+        bucket: formData.Buckets,
+        bankCurrency: formData.Currency,
+        product_id: [...formData.Products],
+        bankLogoUrl: formData.BankLogoURL || '',
+      },
+      status: 'active',
+      checker_id: '',
+      comments: 'Inserting maker checker',
+      makerCheckerEnabled: 'Inactive',
+      ENTITY_ACTION: 'CREATE_GROUP',
     };
 
     Axios.post(BANK_EDIT_URL(8111), PAYLOAD)
@@ -174,23 +231,22 @@ class HomePage extends Component {
             errorType: 'danger',
           });
         }
-        if (error.response.status === 404) {
-          this.setState({
-            show: true,
-            title: 'Server Error',
-            errorType: 'danger',
-          });
-        }
       });
+  };
+
+  endNotification = () => {
+    this.setState({
+      show: false,
+      title: '',
+      errorType: '',
+    });
   };
 
   submit = e => {
     this.myRef.current.onSubmit(e);
   };
 
-  change = () => {
-    // console.log("change :", e);
-  };
+  change = () => {};
 
   render() {
     return (
@@ -201,7 +257,6 @@ class HomePage extends Component {
           title={this.state.title}
           type={this.state.errorType}
           endCallback={this.endNotification}
-          notify={this.notify}
         />
         <div className="main__body">
           <Sidebar history={this.props.history} />
@@ -218,20 +273,13 @@ class HomePage extends Component {
                 {
                   <div className="level-right">
                     <div className="level-item width-100">
-                      <Button
-                        type="secondary"
-                        label="Cancel"
-                        fullwidth
-                        // link="createbank"
-                        // onClick={() => console.log(this.props.history.goBack())}
-                      />
+                      <Button type="secondary" label="Cancel" fullwidth />
                     </div>
                     <div className="level-item width-100">
                       <Button
                         type="primary"
-                        label="Update Bank"
+                        label="Edit Bank"
                         fullwidth
-                        // link="managebank"
                         click={e => {
                           e.preventDefault();
                           this.submit(e);
@@ -243,11 +291,15 @@ class HomePage extends Component {
               </div>
               <div
                 className="page__content"
-                style={{ height: '70vh', overflow: 'scroll' }}
+                style={{ minHeight: '70vh', overflow: 'scroll' }}
               >
-                {/* <Link to="/admin/dashboard/custom/3">admin</Link> */}
                 {this.state.loader ? (
-                  <div>loading....</div>
+                  <Loader
+                    type="Puff"
+                    color="#00BFFF"
+                    height="100"
+                    width="100"
+                  />
                 ) : (
                   <div style={{ marginLeft: '2%' }}>
                     {this.state.toggle ? (
