@@ -1,9 +1,11 @@
 /**
  * @summary Base Urls
  */
-const UAT_DSDEMO_URL_BASE = 'https://3ds2-api-dsdemo-bdc1.enstage-uat.com';
-const UAT_ACSDEMO_URL_BASE = 'https://3ds2-ui-acsdemo-bdc1.enstage-uat.com';
-const SAS_ADMIN_URL_BASE = 'https://3ds2-admin-uidc2.pc.enstage-sas.com';
+import {
+  UAT_DSDEMO_URL_BASE,
+  UAT_ACSDEMO_URL_BASE,
+  SAS_ADMIN_URL_BASE,
+} from './config';
 
 export const LOGIN_API = {
   url: `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/login`,
