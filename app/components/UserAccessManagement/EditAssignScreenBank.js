@@ -5,12 +5,14 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import PropTypes from 'prop-types';
+import Loader from 'react-loader-spinner';
+
 import Button from '../common/Button';
 import Header from '../common/Header';
 import Sidebar from '../common/Sidebar';
 import Footer from '../common/footer';
 import JsonForm from '../common/JsonSchema/form';
-import Notification from '../common/notification';
+// import Notification from '../common/notification';
 import {
   GET_BANK_PRODUCTS,
   GET_BANK_SCREENS,
@@ -49,11 +51,6 @@ class HomePage extends Component {
                 id: product.productId,
                 title: product.productCode,
               }));
-            if (urldata.key === 'Screens')
-              return response.data.listOfScreens.map(screen => ({
-                id: screen.screenId,
-                title: screen.screenName || '',
-              }));
             return response.data.map(other => ({
               id: other.title,
               title: other.title,
@@ -83,7 +80,6 @@ class HomePage extends Component {
         }
         return null;
       });
-      // console.log(schema);
       json.schema = schema;
       json.time = new Date();
       this.setState({
@@ -97,28 +93,11 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    // setTimeout(() => {
-    this.execute(this.props.jsonSchema);
-    // }, 1000);
+    const { jsonSchema } = this.props;
+    this.execute(jsonSchema);
   }
 
-  // eslint-disable-next-line no-unused-vars
   form = formData => {
-    // eslint-disable-next-line no-console
-    // const PAYLOAD = {
-    //   login_id: "kiran@wibmo.com",
-    //   product_id: 1,
-    //   productCode: "UAM",
-    //   screen_id: [1002]
-    // };
-    // Axios.post(
-    //   "https://3ds2-ui-acsdemo-bdc1.enstage-uat.com/admin/uam/v1/8111/assignScreensToBank",
-    //   PAYLOAD
-    // ).then(response => {
-    //   console.log(response);
-    // });
-    // console.log(formData);
-
     // const PAYLOAD = {
     //   token_id: "auth007",
     //   login_id: "Kiran@wibmo.com",
@@ -131,11 +110,21 @@ class HomePage extends Component {
     //   bankLogoUrl: formData.BankLogoURL || ""
     // };
 
+    // const PAYLOAD = {
+    //   login_id: "kiran@wibmo.com",
+    //   product_id: 1,
+    //   productCode: "UAM",
+    //   screen_id: [1002]
+    // };
+
+    // TODO: Remove the the login data
     const PAYLOAD = {
-      login_id: 'kiran@wibmo.com',
-      product_id: 1,
-      productCode: 'UAM',
-      screen_id: [1002],
+      token_id: 'auth007',
+      login_id: 'Kiran@wibmo.com',
+
+      bankName: formData.BankName,
+      product_id: formData.Products,
+      screen_id: formData.Screens,
     };
 
     Axios.post(EDIT_ASSIGN_SCREENS_BANK_URL(8111), PAYLOAD)
@@ -200,7 +189,6 @@ class HomePage extends Component {
           index: this.state.index + 1,
         },
         () => {
-          // setTimeout(() => {
           this.execute({
             ...this.state.schema,
             formData: { ...e.formData, Products: null },
@@ -212,7 +200,6 @@ class HomePage extends Component {
               },
             ],
           });
-          // }, 500000);
         },
       );
     } else if (
@@ -241,48 +228,25 @@ class HomePage extends Component {
           index: this.state.index + 1,
         },
         () => {
-          // setTimeout(() => {
           this.execute({
             ...this.state.schema,
             formData: { ...e.formData, Screens: [] },
             api: [
               {
-                url: GET_BANK_SCREENS(e.formData.BankName),
+                url: GET_BANK_SCREENS(e.formData.Products),
                 type: 'multiselect',
                 key: 'Screens',
               },
             ],
           });
-          // }, 500000);
         },
       );
     }
-    // this.execute(DummyJson);
   };
 
-  endCallback() {
-    this.setState({
-      show: false,
-    });
-  }
-
-  notify() {
-    this.setState({
-      show: true,
-    });
-  }
-
   render() {
-    // console.log(this.state.schema);
     return (
       <div className="main">
-        <Notification
-          title="Please Fill all the required fields"
-          show={this.state.show}
-          type="danger"
-          notify={this.notify}
-          endCallback={this.endCallback}
-        />
         <Header />
         <div className="main__body">
           <Sidebar />
@@ -310,9 +274,8 @@ class HomePage extends Component {
                     <div className="level-item width-100">
                       <Button
                         type="primary"
-                        label="Update"
+                        label="Assign"
                         fullwidth
-                        // link="managebank"
                         click={e => {
                           e.preventDefault();
                           this.submit(e);
@@ -324,11 +287,15 @@ class HomePage extends Component {
               </div>
               <div
                 className="page__content"
-                style={{ height: '70vh', overflow: 'scroll' }}
+                style={{ minHeight: '70vh', overflow: 'scroll' }}
               >
-                {/* <Link to="/admin/dashboard/custom/3">admin</Link> */}
                 {this.state.loader ? (
-                  <div>loading....</div>
+                  <Loader
+                    type="Puff"
+                    color="#00BFFF"
+                    height="100"
+                    width="100"
+                  />
                 ) : (
                   <div style={{ marginLeft: '2%' }}>
                     <JsonForm

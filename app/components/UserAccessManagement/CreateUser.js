@@ -4,13 +4,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
+import Loader from 'react-loader-spinner';
+
 import Button from '../common/Button';
 import Header from '../common/Header';
 import Sidebar from '../common/Sidebar';
 import Footer from '../common/footer';
 import JsonForm from '../common/JsonSchema/form';
 import Notification from '../common/notification';
-import { CREATE_USER_URL } from '../../utils/requestUrl';
+import { CREATE_USER_URL, GET_BANK_PRODUCTS } from '../../utils/requestUrl';
 
 class HomePage extends Component {
   constructor(props) {
@@ -41,11 +43,13 @@ class HomePage extends Component {
                 id: bank.bank_id,
                 title: bank.bankName,
               }));
-            if (urldata.key === 'Products')
-              return response.data.listOfProducts.map(product => ({
-                id: product.productId,
-                title: product.productCode,
-              }));
+            if (urldata.key === 'BankList')
+              return response.data.listOfBank
+                .filter(data => data.bankParentId === 1000)
+                .map(bank => ({
+                  id: bank.bank_id,
+                  title: bank.bankName,
+                }));
             return response.data.map(other => ({
               id: other.title,
               title: other.title,
@@ -75,7 +79,6 @@ class HomePage extends Component {
         }
         return null;
       });
-      // console.log(schema);
       json.schema = schema;
       json.time = new Date();
       this.setState({
@@ -88,9 +91,8 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    // setTimeout(() => {
-    this.execute(this.props.jsonSchema);
-    // }, 1000);
+    const { jsonSchema } = this.props;
+    this.execute(jsonSchema);
   }
 
   endNotification = () => {
@@ -103,10 +105,11 @@ class HomePage extends Component {
 
   form = formData => {
     // eslint-disable-next-line no-console
-    console.log(formData);
 
     // TODO: Add other auth dependent params
     // TODO: Move URL to config
+
+    // TODO: Remove hardcode data
 
     const PAYLOAD = {
       USER_ID: formData.LoginID,
@@ -117,10 +120,10 @@ class HomePage extends Component {
       EMAIL: formData.EmailID,
       FIRST_NAME: formData.FirstName,
       LAST_NAME: formData.LastName,
-      STATUS: 'Active',
+      STATUS: formData.Status,
     };
 
-    Axios.post(CREATE_USER_URL, PAYLOAD)
+    Axios.post(CREATE_USER_URL(1000), PAYLOAD)
       .then(response => {
         if (response.status == 200 || response.status == 201) {
           if (response.data.responseCode == '200') {
@@ -185,29 +188,23 @@ class HomePage extends Component {
           index: this.state.index + 1,
         },
         () => {
-          // setTimeout(() => {
           this.execute({
             ...this.state.schema,
             formData: { ...e.formData, Products: [] },
             api: [
               {
-                url: `https://3ds2-ui-acsdemo-bdc1.enstage-uat.com/admin/uam/v1/banks/${
-                  e.formData.BankName
-                }/products`,
+                url: GET_BANK_PRODUCTS(e.formData.BankName),
                 type: 'multiselect',
                 key: 'Products',
               },
             ],
           });
-          // }, 500000);
         },
       );
     }
-    // this.execute(DummyJson);
   };
 
   render() {
-    // console.log(this.state.schema);
     return (
       <div className="main">
         <Header history={this.props.history} />
@@ -232,20 +229,13 @@ class HomePage extends Component {
                 {
                   <div className="level-right">
                     <div className="level-item width-100">
-                      <Button
-                        type="secondary"
-                        label="Cancel"
-                        fullwidth
-                        // link="createbank"
-                        // onClick={() => console.log(this.props.history.goBack())}
-                      />
+                      <Button type="secondary" label="Cancel" fullwidth />
                     </div>
                     <div className="level-item width-100">
                       <Button
                         type="primary"
                         label="Create User"
                         fullwidth
-                        // link="managebank"
                         click={e => {
                           e.preventDefault();
                           this.submit(e);
@@ -257,11 +247,15 @@ class HomePage extends Component {
               </div>
               <div
                 className="page__content"
-                style={{ height: '70vh', overflow: 'scroll' }}
+                style={{ minHeight: '70vh', overflow: 'scroll' }}
               >
-                {/* <Link to="/admin/dashboard/custom/3">admin</Link> */}
                 {this.state.loader ? (
-                  <div>loading....</div>
+                  <Loader
+                    type="Puff"
+                    color="#00BFFF"
+                    height="100"
+                    width="100"
+                  />
                 ) : (
                   <div style={{ marginLeft: '2%' }}>
                     <JsonForm

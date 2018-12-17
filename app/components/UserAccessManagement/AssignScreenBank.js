@@ -83,7 +83,6 @@ class HomePage extends Component {
         }
         return null;
       });
-      // console.log(schema);
       json.schema = schema;
       json.time = new Date();
       this.setState({
@@ -97,48 +96,22 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    // setTimeout(() => {
     this.execute(this.props.jsonSchema);
-    // }, 1000);
   }
 
   // eslint-disable-next-line no-unused-vars
   form = formData => {
-    // eslint-disable-next-line no-console
-    // const PAYLOAD = {
-    //   login_id: "kiran@wibmo.com",
-    //   product_id: 1,
-    //   productCode: "UAM",
-    //   screen_id: [1002]
-    // };
-    // Axios.post(
-    //   "https://3ds2-ui-acsdemo-bdc1.enstage-uat.com/admin/uam/v1/8111/assignScreensToBank",
-    //   PAYLOAD
-    // ).then(response => {
-    //   console.log(response);
-    // });
-    // console.log(formData);
-
-    // const PAYLOAD = {
-    //   token_id: "auth007",
-    //   login_id: "Kiran@wibmo.com",
-    //   bank_id: formData.BankID,
-    //   bankName: formData.BankName,
-    //   bucket: formData.Buckets,
-    //   status: "Active",
-    //   bankCurrency: formData.Currency,
-    //   product_id: [...formData.Products],
-    //   bankLogoUrl: formData.BankLogoURL || ""
-    // };
-
+    // TODO: Remove the the login data
     const PAYLOAD = {
-      login_id: 'kiran@wibmo.com',
-      product_id: 1,
-      productCode: 'UAM',
-      screen_id: [1002],
+      token_id: 'auth007',
+      login_id: 'Kiran@wibmo.com',
+
+      bankName: formData.BankName,
+      product_id: formData.Products,
+      screen_id: formData.Screens,
     };
 
-    Axios.post(ASSIGN_SCREENS_BANK_URL(8111), PAYLOAD)
+    Axios.post(ASSIGN_SCREENS_BANK_URL, PAYLOAD)
       .then(response => {
         if (response.status == 200 || response.status == 201) {
           if (response.data.responseCode == '200') {
@@ -200,7 +173,6 @@ class HomePage extends Component {
           index: this.state.index + 1,
         },
         () => {
-          // setTimeout(() => {
           this.execute({
             ...this.state.schema,
             formData: { ...e.formData, Products: null },
@@ -212,7 +184,6 @@ class HomePage extends Component {
               },
             ],
           });
-          // }, 500000);
         },
       );
     } else if (
@@ -241,7 +212,6 @@ class HomePage extends Component {
           index: this.state.index + 1,
         },
         () => {
-          // setTimeout(() => {
           this.execute({
             ...this.state.schema,
             formData: { ...e.formData, Screens: [] },
@@ -253,11 +223,9 @@ class HomePage extends Component {
               },
             ],
           });
-          // }, 500000);
         },
       );
     }
-    // this.execute(DummyJson);
   };
 
   endCallback() {
@@ -273,7 +241,6 @@ class HomePage extends Component {
   }
 
   render() {
-    // console.log(this.state.schema);
     return (
       <div className="main">
         <Notification

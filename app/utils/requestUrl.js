@@ -46,6 +46,15 @@ export const EDIT_ASSIGN_GROUP_USERS_URL = id =>
 export const ASSIGN_SCREENS_BANK_URL = id =>
   `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/${id}/assignScreensToBank`;
 
+export const GET_BANK_USER_GROUP = id =>
+  `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/${id}/getGroups`;
+
+export const ASSIGN_GROUP_TO_BANK = id =>
+  `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/${id}/assignGroupUsers`;
+
+export const GET_GROUP_USERS = (bank, group) =>
+  `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/${bank}/${group}/getGroupUsers`;
+
 export const EDIT_ASSIGN_SCREENS_BANK_URL = id =>
   `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/${id}/assignScreensToBank`;
 
@@ -64,3 +73,6 @@ export const CREATE_GROUP_URL = `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/cre
 
 export const EDIT_GROUP_URL = id =>
   `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/${id}/updategroup`;
+
+export const GET_GROUP_PERMISSIONS = id =>
+  `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/${id}/getGroupPermissions`;

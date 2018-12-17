@@ -6,13 +6,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
+import Loader from 'react-loader-spinner';
+
 import Button from '../common/Button';
 import JsonForm from '../common/JsonSchema/form';
 import Header from '../common/Header';
 import Sidebar from '../common/Sidebar';
 import Footer from '../common/footer';
 import Notification from '../common/notification';
-import { BANK_CREATE_URL } from '../../utils/requestUrl';
+import { BANK_CREATE_URL, GET_BANK_PRODUCTS } from '../../utils/requestUrl';
 
 class HomePage extends Component {
   constructor(props) {
@@ -87,12 +89,19 @@ class HomePage extends Component {
       });
     });
   };
-  // UNSAFE_componentWillReceiveProps(props) {}
 
   componentDidMount() {
-    // setTimeout(() => {
-    this.execute(this.props.jsonSchema);
-    // }, 1000);
+    const { jsonSchema } = this.props;
+    const Json = { ...jsonSchema };
+    Json.api = [
+      {
+        // TODO: Remove hardcoded data
+        url: GET_BANK_PRODUCTS(8111),
+        type: 'multiselect',
+        key: 'Products',
+      },
+    ];
+    this.execute(Json);
   }
 
   notify() {
@@ -120,32 +129,46 @@ class HomePage extends Component {
 
     // const PAYLOAD = {
     //   token_id: "auth007",
-    //   login_id: "Kiran@wibmo.com",
-    //   bank_id: formData.BankID,
+    //   login_id: "Shivnath@wibmo.com",
+
     //   bankName: formData.BankName,
+    //   bankCode: formData.BankCode,
+    //   bank_id: formData.BankID,
     //   bucket: formData.Buckets,
-    //   status: "Active",
     //   bankCurrency: formData.Currency,
     //   product_id: [...formData.Products],
     //   bankLogoUrl: formData.BankLogoURL || ""
     // };
 
     const PAYLOAD = {
-      token_id: 'auth007',
-      login_id: 'Shivnath@wibmo.com',
-
+      uuid: '0003',
       bank_id: 8111,
-      bankCode: 'test',
-      bankName: 'adiba Bank',
-      bankCurrency: 800,
-      bankType: 'Custom Bucket 3',
-      parentBank_id: 1000,
-      status: 'Active',
-
-      bucket: 'Bucket 3',
-      bankLogoUrl: '/opt/accosa/bankId/',
-      product_id: [1, 2],
+      maker_id: 'adminaxis',
+      product_id: 1,
+      bankCode: 'HDFC',
+      bankName: 'HDFC BANK',
+      productCode: 'ACS',
+      screen_id: 123,
+      previousDataJson: {},
+      newDataJson: {
+        token_id: 'auth007',
+        login_id: 'Shivnath@wibmo.com',
+        bankName: formData.BankName,
+        bankCode: formData.BankCode,
+        bank_id: formData.BankID,
+        bucket: formData.Buckets,
+        bankCurrency: formData.Currency,
+        product_id: [...formData.Products],
+        bankLogoUrl: formData.BankLogoURL || '',
+      },
+      status: 'active',
+      checker_id: '',
+      comments: 'Inserting maker checker',
+      makerCheckerEnabled: 'Inactive',
+      ENTITY_ACTION: 'CREATE_GROUP',
     };
+
+    // TODO: Remove hardcode payload
 
     Axios.post(BANK_CREATE_URL, PAYLOAD)
       .then(response => {
@@ -153,7 +176,7 @@ class HomePage extends Component {
           if (response.data.responseCode == '200') {
             this.setState({
               show: true,
-              title: 'Success',
+              title: response.data.responseDesc,
               errorType: 'success',
             });
           } else {
@@ -187,10 +210,6 @@ class HomePage extends Component {
     this.myRef.current.onSubmit(e);
   };
 
-  change = () => {
-    // console.log("change :", e);
-  };
-
   render() {
     return (
       <div className="main">
@@ -217,13 +236,7 @@ class HomePage extends Component {
                 {
                   <div className="level-right">
                     <div className="level-item width-100">
-                      <Button
-                        type="secondary"
-                        label="Cancel"
-                        fullwidth
-                        // link="createbank"
-                        // onClick={() => console.log(this.props.history.goBack())}
-                      />
+                      <Button type="secondary" label="Cancel" fullwidth />
                     </div>
                     <div className="level-item width-100">
                       <Button
@@ -242,11 +255,15 @@ class HomePage extends Component {
               </div>
               <div
                 className="page__content"
-                style={{ height: '70vh', overflow: 'scroll' }}
+                style={{ minHeight: '70vh', overflow: 'scroll' }}
               >
-                {/* <Link to="/admin/dashboard/custom/3">admin</Link> */}
                 {this.state.loader ? (
-                  <div>loading....</div>
+                  <Loader
+                    type="Puff"
+                    color="#00BFFF"
+                    height="100"
+                    width="100"
+                  />
                 ) : (
                   <div style={{ marginLeft: '2%' }}>
                     {this.state.toggle ? (

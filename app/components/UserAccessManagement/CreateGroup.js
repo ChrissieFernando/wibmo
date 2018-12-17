@@ -4,13 +4,19 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import PropTypes from 'prop-types';
+import Loader from 'react-loader-spinner';
+
 import Button from '../common/Button';
 import Header from '../common/Header';
 import Sidebar from '../common/Sidebar';
 import Footer from '../common/footer';
 import JsonForm from '../common/JsonSchema/form';
 // import Notification from "../components/common/notification";
-import { CREATE_GROUP_URL } from '../../utils/requestUrl';
+import {
+  CREATE_GROUP_URL,
+  GET_BANK_PRODUCTS,
+  GET_GROUP_PERMISSIONS,
+} from '../../utils/requestUrl';
 
 class HomePage extends Component {
   constructor(props) {
@@ -56,9 +62,15 @@ class HomePage extends Component {
           if (urldata.key === 'Permissions') {
             if (response.data.length === 0)
               return [{ id: '', title: 'No Data Available' }];
-            return response.data.map(product => ({
-              id: product.productId,
-              title: product.productCode,
+            json.formData = {
+              ...json.formData,
+              Permissions: response.data
+                .filter(data => data.isAssigned)
+                .map(data => data.permissionId),
+            };
+            return response.data.map(permission => ({
+              id: permission.permissionId,
+              title: permission.permissionDescription,
             }));
           }
           return [{ id: '', title: response.data.responseDesc }];
@@ -107,41 +119,53 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    // setTimeout(() => {
-    this.execute(this.props.jsonSchema);
-    // }, 1000);
+    const { jsonSchema } = this.props;
+    this.execute(jsonSchema);
   }
 
-  // eslint-disable-next-line no-unused-vars
   form = formData => {
+    // eslint-disable-next-line no-console
+    console.log(formData);
     // TODO: Add other auth dependent params
     // TODO: Move URL to config
+
     // const PAYLOAD = {
     //   group_name: formData.GroupName,
-    //   bank_id: formData.BankID,
+    //   bank_id: formData.BankName,
     //   product_id: formData.Products,
-    //   status: "Active"
-    //   // created_by: "panditji"
+    //   permissions: formData.Permissions,
+    //   status: "Active",
+    //   makerCheckerEnabled: "Inactive",
+    //   created_by: "Kiran" // TODO: Link with login id
     // };
 
     const PAYLOAD = {
-      group_name: 'Group_P1',
+      uuid: '0003',
       bank_id: 8111,
+      maker_id: 'adminaxis',
       product_id: 1,
-      status: 'Active',
-      created_by: 'panditji',
+      bankCode: 'HDFC',
+      bankName: 'HDFC BANK',
+      productCode: 'ACS',
+      screen_id: 123,
+      previousDataJson: {},
+      newDataJson: {
+        group_name: formData.GroupName,
+        bank_id: formData.BankName,
+        product_id: formData.Products,
+        permissions: formData.Permissions,
+        status: 'Active',
+        created_by: 'Kiran',
+      },
+      status: 'active',
+      checker_id: '',
+      comments: 'Inserting maker checker',
+      makerCheckerEnabled: 'Inactive',
+      ENTITY_ACTION: 'CREATE_GROUP',
     };
 
     Axios.post(CREATE_GROUP_URL, PAYLOAD)
       .then(response => {
-        // if (response.status == 200 || response.status == 201) {
-        //   if (response.data.responseCode == "200") {
-        //     this.setState({
-        //       show: true,
-        //       title: "Success",
-        //       errorType: "success"
-        //     });
-        //   }
         if (response.data === 'Success') {
           this.setState({
             show: true,
@@ -185,7 +209,11 @@ class HomePage extends Component {
         {
           schema: {
             ...this.state.schema,
-            formData: { ...e.formData, Products: null },
+            formData: {
+              ...e.formData,
+              Products: null,
+              BankID: e.formData.BankName,
+            },
             schema: {
               ...this.state.schema.schema,
               properties: {
@@ -194,6 +222,14 @@ class HomePage extends Component {
                   ...e.schema.properties.Products,
                   enum: [''],
                   enumNames: ['Loading ....'],
+                },
+                Permissions: {
+                  ...e.schema.properties.Permissions,
+                  items: {
+                    ...e.schema.properties.Permissions.items,
+                    enum: [''],
+                    enumNames: ['Select a Product'],
+                  },
                 },
               },
             },
@@ -204,12 +240,15 @@ class HomePage extends Component {
           // setTimeout(() => {
           this.execute({
             ...this.state.schema,
-            formData: { ...e.formData, Products: null },
+            formData: {
+              ...e.formData,
+              Products: null,
+              BankID: e.formData.BankName,
+              Permissions: [],
+            },
             api: [
               {
-                url: `https://3ds2-ui-acsdemo-bdc1.enstage-uat.com/admin/uam/v1/banks/${
-                  e.formData.BankName
-                }/products`,
+                url: GET_BANK_PRODUCTS(e.formData.BankName),
                 type: 'dropdown',
                 key: 'Products',
               },
@@ -250,10 +289,8 @@ class HomePage extends Component {
             formData: { ...e.formData, Permissions: [] },
             api: [
               {
-                url: `https://3ds2-ui-acsdemo-bdc1.enstage-uat.com/admin/uam/v1/groups/${
-                  // e.formData.BankName
-                  8111
-                }/getgrouppermissions`,
+                // TODO: Remove Hardcoded data
+                url: GET_GROUP_PERMISSIONS(e.formData.BankName),
                 type: 'multiselect',
                 key: 'Permissions',
               },
@@ -286,20 +323,13 @@ class HomePage extends Component {
                 {
                   <div className="level-right">
                     <div className="level-item width-100">
-                      <Button
-                        type="secondary"
-                        label="Cancel"
-                        fullwidth
-                        // link="createbank"
-                        // onClick={() => console.log(this.props.history.goBack())}
-                      />
+                      <Button type="secondary" label="Cancel" fullwidth />
                     </div>
                     <div className="level-item width-100">
                       <Button
                         type="primary"
                         label="Create Group"
                         fullwidth
-                        // link="managebank"
                         click={e => {
                           e.preventDefault();
                           this.submit(e);
@@ -311,11 +341,15 @@ class HomePage extends Component {
               </div>
               <div
                 className="page__content"
-                style={{ height: '80vh', overflow: 'scroll' }}
+                style={{ minHeight: '70vh', overflow: 'scroll' }}
               >
-                {/* <Link to="/admin/dashboard/custom/3">admin</Link> */}
                 {this.state.loader ? (
-                  <div>loading....</div>
+                  <Loader
+                    type="Puff"
+                    color="#00BFFF"
+                    height="100"
+                    width="100"
+                  />
                 ) : (
                   <div style={{ marginLeft: '2%' }}>
                     <JsonForm
