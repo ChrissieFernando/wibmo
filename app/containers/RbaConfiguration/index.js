@@ -7,7 +7,6 @@ import Axios from 'axios';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import Notification from 'antd/lib/notification';
 import Button from '../../components/common/Button';
 import Header from '../../components/common/Header';
 import Sidebar from '../../components/common/sidenav';
@@ -16,6 +15,7 @@ import { makeSelectRbaConfiguration } from './selectors';
 import { makeSelectGlobals, makeSelectLoginProfile } from '../Login/selectors';
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
+import Notification from '../../components/common/notification';
 import { fetchRbaConfiguration } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -37,12 +37,10 @@ class HomePage extends Component {
       state.lastFetched !== props.Rba.lastFetched &&
       state.initial
     ) {
-      Notification.destroy();
-      Notification.success({
-        message: 'Successfully Updated',
-        duration: 3,
-      });
       return {
+        title: 'Successfully Updated',
+        show: true,
+        type: 'success',
         lastFetched: props.Rba && props.Rba.lastFetched,
       };
     }
@@ -55,13 +53,6 @@ class HomePage extends Component {
     });
   };
 
-  openNotificationWithIcon = (type, description) => {
-    Notification[type]({
-      ...description,
-      duration: 3,
-    });
-  };
-
   IsValidJSONString = str => {
     try {
       JSON.parse(str);
@@ -69,6 +60,12 @@ class HomePage extends Component {
       return false;
     }
     return true;
+  };
+
+  endCallback = () => {
+    this.setState({
+      show: false,
+    });
   };
 
   componentDidMount() {
@@ -82,23 +79,19 @@ class HomePage extends Component {
             loading: true,
           });
         else {
-          Notification.destroy();
-          this.openNotificationWithIcon('error', {
-            message: 'RBA Fetch Error',
-            description: res.data.Result,
-          });
           this.setState({
             loading: true,
+            title: res.data.Result,
+            show: true,
+            type: 'danger',
           });
         }
       })
       .catch(() => {
-        Notification.destroy();
-        this.openNotificationWithIcon('error', {
-          message: 'Fetch Error',
-          description: 'Unable to Fetch data',
-        });
         this.setState({
+          title: 'Unable to Fetch data',
+          show: true,
+          type: 'danger',
           loading: true,
         });
       });
@@ -109,7 +102,6 @@ class HomePage extends Component {
   }
 
   submit = () => {
-    Notification.destroy();
     if (
       this.state.text &&
       this.state.text.length >= 10 &&
@@ -128,15 +120,16 @@ class HomePage extends Component {
         // permissionId_list: [222, 333]
       });
     else if (!this.props.globals.bank_id)
-      this.openNotificationWithIcon('error', {
-        message: 'Validation Error',
-        description: 'Please Select A Bank',
+      this.setState({
+        title: 'Please Select A Bank',
+        show: true,
+        type: 'danger',
       });
     else
-      this.openNotificationWithIcon('error', {
-        message: 'Validation Error',
-        description:
-          'RBA Configuration should contain minimum of 10 Characters',
+      this.setState({
+        title: 'RBA Configuration should contain minimum of 10 Characters',
+        show: true,
+        type: 'danger',
       });
   };
 
@@ -144,6 +137,13 @@ class HomePage extends Component {
     return (
       <div className="main">
         <Header history={this.props.history} />
+        <Notification
+          title={this.state.title}
+          show={this.state.show}
+          type={this.state.type}
+          notify={this.notify}
+          endCallback={this.endCallback}
+        />
         <div className="main__body">
           <Sidebar history={this.props.history} />
           <div className="main__wrapper">

@@ -23,14 +23,15 @@ import {
 import Axios from 'axios';
 import Notification from 'antd/lib/notification';
 import Button from '../common/Button';
-// import Header from '../common/Header';
-// import Sidebar from '../common/sidenav';
+import Header from '../common/Header';
+import Sidebar from '../common/sidenav';
 import {
   BANK_LIST_API,
   AREQ_API,
   CREQ_API,
   RREQ_API,
 } from '../../utils/requestUrl';
+import QueryDecoder from '../../utils/Common/QueryParamsDecoder';
 import Footer from '../common/footer';
 
 const openNotificationWithIcon = (type, description) => {
@@ -67,15 +68,9 @@ class TransactionDetails extends Component {
   }
 
   componentDidMount() {
-    // const rreq = transactionJson.filter(o => {
-    //   return o.rreq;
-    // });
-    // const rres = transactionJson.filter(o => o.rres);
-    // this.setState({
-    //   params: QuaryDecoder(this.props.location.search),
-    //   rreq,
-    //   rres,
-    // });
+    this.setState({
+      params: QueryDecoder(this.props.location.search),
+    });
     Axios.get(BANK_LIST_API).then(res => {
       this.setState({
         bank_list: _.groupBy(res.data.Result, data => data.bank_id),
@@ -149,10 +144,9 @@ class TransactionDetails extends Component {
   render() {
     return (
       <div className="main">
-        {/** <Header history={this.props.history} /> */}
-
+        <Header history={this.props.history} />
         <div className="main__body">
-          {/** <Sidebar history={this.props.history} /> */}
+          <Sidebar history={this.props.history} />
           <div className="main__wrapper">
             <div className="page">
               <div className="level page__header ">
@@ -557,7 +551,7 @@ class TransactionDetails extends Component {
 }
 TransactionDetails.propTypes = {
   history: PropTypes.object,
-  // location: PropTypes.object,
+  location: PropTypes.object,
   globalData: PropTypes.object,
   profile: PropTypes.object,
   // transaction: PropTypes.object,

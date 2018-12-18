@@ -10,5 +10,7 @@
  */
 
 export const LOGIN = 'app/containers/App/LOGIN';
+export const LOGINSUCCESS = 'app/containers/App/LOGINSUCCESS';
+export const LOGINFAILURE = 'app/containers/App/LOGINFAILURE';
 export const LOGOUT = 'app/containers/App/LOGOUT';
 export const GLOBALS = 'app/containers/App/GLOBALS';

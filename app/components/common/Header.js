@@ -244,10 +244,10 @@ class Header extends Component {
                   <div className="dropdown-item dropdown-item--profile">
                     <span className="name">{`${this.props.profile &&
                       this.props.profile.userProfile &&
-                      this.props.profile.userProfile.firstName} ${this.props
+                      this.props.profile.userProfile.first_name} ${this.props
                       .profile &&
                       this.props.profile.userProfile &&
-                      this.props.profile.userProfile.lastName}`}</span>
+                      this.props.profile.userProfile.last_name}`}</span>
                     <span className="description">
                       {this.props.profile.userProfile &&
                         this.props.profile.userProfile.email}

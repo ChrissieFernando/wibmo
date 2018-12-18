@@ -38,7 +38,7 @@ class HomePage extends PureComponent {
   }
 }
 const mapStateToProps = state => ({
-  profile: state.login.profile,
+  profile: state.toJS().login.profile,
 });
 HomePage.propTypes = {
   // profile: Proptypes.object,

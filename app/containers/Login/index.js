@@ -9,15 +9,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { DAEMON } from '../../utils/constants';
 import {
-  makeSelectLocation,
+  // makeSelectLocation,
   makeSelectLogin,
   makeSelectLoginStatus,
 } from './selectors';
-import injectReducer from '../../utils/injectReducer';
+// import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import { login } from './actions';
-import reducer from './reducer';
+// import reducer from './reducer';
 import saga from './saga';
 import wibmo from '../../images/Wibmo-Logo.png';
 import slider from '../../images/slider-img.png';
@@ -31,7 +32,8 @@ class Login extends Component {
       loginId: '',
     },
     loading: false,
-    // lastFetched: '',
+    // eslint-disable-next-line react/no-unused-state
+    lastFetched: '',
     error: {
       username: null,
       password: null,
@@ -44,7 +46,6 @@ class Login extends Component {
 
   loginForm = e => {
     // eslint-disable-next-line no-console
-    console.log('login');
     if (e.target.name === 'password') {
       if (e.target.value.length < 8)
         this.setState(state => ({
@@ -112,8 +113,8 @@ class Login extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (
-      state.lastFetched !== props.loginData &&
-      props.loginData.lastFetched &&
+      props.loginData &&
+      state.lastFetched !== props.loginData.lastFetched &&
       !props.success
     ) {
       if (props && !props.success && props.loginData.code === 305) {
@@ -131,14 +132,17 @@ class Login extends Component {
         lastFetched: props.loginData.lastFetched,
       };
     }
-
-    if (props && props.success) {
-      props.history.push('/admin/dashboard');
+    if (
+      props &&
+      props.success &&
+      state.lastFetched !== props.loginData.lastFetched &&
+      props.location.pathname === '/admin/login'
+    ) {
       return {
         loading: false,
+        lastFetched: props.loginData.lastFetched,
       };
     }
-
     return {};
   }
 
@@ -274,14 +278,14 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
+  // success: PropTypes.bool.isRequired,
   // history: PropTypes.object.isRequired,
   // match: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   loginData: makeSelectLogin(),
-  location: makeSelectLocation(),
+  // location: makeSelectLocation(),
   success: makeSelectLoginStatus(),
 });
 
@@ -290,11 +294,14 @@ const withConnect = connect(
   { login },
 );
 
-const withReducer = injectReducer({ key: 'login', reducer });
-const withSaga = injectSaga({ key: 'login', saga });
+// const withReducer = injectReducer({
+//   key: 'login',
+//   reducer,
+// });
+const withSaga = injectSaga({ key: 'login', saga, mode: DAEMON });
 
 export default compose(
-  withReducer,
+  // withReducer,
   withSaga,
   withConnect,
 )(Login);

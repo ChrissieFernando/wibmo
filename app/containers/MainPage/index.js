@@ -1,11 +1,12 @@
 import { Switch } from 'react-router-dom';
 import React, { Component } from 'react';
 import { compose } from 'redux';
+// import { DAEMON } from '../../utils/constants';
 import RouteWithSubRoutes from '../../utils/Auth/RouteWithSubRoutes';
-import injectReducer from '../../utils/injectReducer';
-import injectSaga from '../../utils/injectSaga';
-import reducer from '../Login/reducer';
-import saga from '../Login/saga';
+// import injectReducer from '../../utils/injectReducer';
+// import injectSaga from '../../utils/injectSaga';
+// import reducer from '../Login/reducer';
+// import saga from '../Login/saga';
 
 class MainPage extends Component {
   componentDidMount() {}
@@ -21,10 +22,9 @@ class MainPage extends Component {
   }
 }
 
-const withReducer = injectReducer({ key: 'login', reducer });
-const withSaga = injectSaga({ key: 'login', saga });
+// const withReducer = injectReducer({ key: 'login', reducer });
+// const withSaga = injectSaga({ key: 'login', saga, mode: DAEMON });
 
-export default compose(
-  withReducer,
-  withSaga,
-)(MainPage);
+export default compose()(MainPage);
+// withReducer,
+// withSaga,

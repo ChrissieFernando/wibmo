@@ -5,7 +5,7 @@ const initialState = {
 };
 export default function logonReducer(state = initialState, action) {
   switch (action.type) {
-    case actions.RBA:
+    case actions.POST_RBA_CONFIGURATION_SUCCESS:
       return {
         ...state,
         rba: action.payload,

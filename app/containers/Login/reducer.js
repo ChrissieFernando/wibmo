@@ -24,7 +24,7 @@ const initialState = {
 };
 export default function loginReducer(state = initialState, action) {
   switch (action.type) {
-    case actions.LOGIN:
+    case actions.LOGINSUCCESS:
       return {
         ...state,
         profile: action.payload.profile,

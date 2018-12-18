@@ -19,8 +19,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import Button from '../common/Button';
 import Input from '../common/Input';
-// import Header from '../common/Header';
-// import Sidebar from '../common/sidenav';
+import Header from '../common/Header';
+import Sidebar from '../common/sidenav';
 import QueryParamDecoder from '../../utils/Common/QueryParamsDecoder';
 const $ = require('jquery');
 /* eslint-disable */
@@ -324,10 +324,9 @@ class Transaction extends Component {
   render() {
     return (
       <div className="main" onClick={() => this.setState({ dropdown: {} })}>
-        {/* <Header history={this.props.history} /> */}
-
+       <Header history={this.props.history} /> 
         <div className="main__body">
-          {/* <Sidebar history={this.props.history} /> */}
+        <Sidebar history={this.props.history} /> 
           <div className="main__wrapper">
             <div className="page">
               <div className="page__content">

@@ -11,8 +11,8 @@ import {
 } from './actions';
 
 export function* fetchRbaConfiguration(payload) {
-  const data = payload.payload;
   try {
+    const data = payload.payload;
     const res = yield call(request, { ...RBA_API, data });
     if (res.data['Response-Code'] == '200')
       yield put(fetchRbaConfigurationSuccess(res.data));

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import {
-  makeSelectLocation,
   makeSelectTransaction,
   makeSelectTransactionDetail,
 } from '../selector';
@@ -28,7 +27,14 @@ class Transaction extends PureComponent {
   componentDidMount() {}
 
   render() {
-    const { transaction, profile, history, match, globalData } = this.props;
+    const {
+      transaction,
+      profile,
+      history,
+      match,
+      globalData,
+      location,
+    } = this.props;
     return (
       <TransactionReport
         transactions={this.props.fetchTransactionReport}
@@ -39,6 +45,7 @@ class Transaction extends PureComponent {
         profile={profile}
         history={history}
         match={match}
+        location={location}
         globalData={globalData}
       />
     );
@@ -53,6 +60,7 @@ Transaction.propTypes = {
   globalData: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   transaction: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
 };
@@ -60,7 +68,7 @@ Transaction.propTypes = {
 const mapStateToProps = createStructuredSelector({
   makeSelectTransactionDetail: makeSelectTransactionDetail(),
   transaction: makeSelectTransaction(),
-  location: makeSelectLocation(),
+  // location: makeSelectLocation(),
   profile: makeSelectLoginProfile(),
   globalData: makeSelectGlobals(),
 });

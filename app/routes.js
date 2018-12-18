@@ -11,7 +11,7 @@ import Login from './containers/Login';
 // import ResetPassword from './components/ResetPassword';
 // import NotFoundPage from './components/NotFoundPage';
 import TransactionReport from './containers/Transaction/TransactionReport';
-// import RbaConfiguration from './components/RBA_configuration';
+import RbaConfiguration from './containers/RbaConfiguration';
 import TransactionDetail from './containers/Transaction/TransactionDetail';
 import CreateBank from './containers/UserAccessManagement/CreateBank';
 import EditBank from './containers/UserAccessManagement/EditBank';
@@ -160,12 +160,12 @@ const routes = [
         exact: true,
         component: TransactionReport,
       },
-      //     {
-      //       path: '/admin/dashboard/rba-configuration',
-      //       auth: true,
-      //       exact: true,
-      //       component: RbaConfiguration,
-      //     },
+      {
+        path: '/admin/dashboard/rba-configuration',
+        auth: true,
+        exact: true,
+        component: RbaConfiguration,
+      },
       {
         path: '/admin/dashboard/transaction-detail',
         auth: true,

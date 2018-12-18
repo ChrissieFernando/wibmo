@@ -3,10 +3,9 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { DAEMON } from '../constants';
 import { makeSelectLoginStatus } from '../../containers/Login/selectors';
-import reducer from '../../containers/Login/reducer';
 import saga from '../../containers/Login/saga';
-import injectReducer from '../injectReducer';
 import injectSaga from '../injectSaga';
 class PrivateRoute extends React.PureComponent {
   render() {
@@ -31,17 +30,15 @@ class PrivateRoute extends React.PureComponent {
   }
 }
 
-const withReducer = injectReducer({ key: 'login', reducer });
-const withSaga = injectSaga({ key: 'login', saga });
+const withSaga = injectSaga({ key: 'login', saga, mode: DAEMON });
 
 const mapStateToProps = createStructuredSelector({
-  success: makeSelectLoginStatus(),
+  authSuccess: makeSelectLoginStatus(),
 });
 
 const withConnect = connect(mapStateToProps);
 
 export default compose(
-  withReducer,
   withSaga,
   withConnect,
 )(PrivateRoute);

@@ -17,8 +17,8 @@ import {
 } from './actions';
 
 export function* transactionReportGenerator(payload) {
-  const data = JSON.stringify(payload);
   try {
+    const data = JSON.stringify(payload.payload);
     const res = yield call(request, { ...TRANSACTION_REPORT_API, data });
     if (
       res.data['Response-Code'] == '200' &&
@@ -29,11 +29,12 @@ export function* transactionReportGenerator(payload) {
           data: res.data.Result,
         }),
       );
-    yield put(
-      fetchTransactionReportFailure({
-        error: res.data.Result,
-      }),
-    );
+    else
+      yield put(
+        fetchTransactionReportFailure({
+          error: res.data.Result,
+        }),
+      );
   } catch (err) {
     yield put(
       fetchTransactionReportFailure({
@@ -43,7 +44,7 @@ export function* transactionReportGenerator(payload) {
   }
 }
 export function* transactionDetailGenerator(payload) {
-  const data = JSON.stringify(payload);
+  const data = JSON.stringify(payload.payload);
   try {
     const res = yield call(request, { ...TRANSACTION_DETAIL_API, data });
     if (
@@ -51,7 +52,7 @@ export function* transactionDetailGenerator(payload) {
       typeof res.data.Result !== 'string'
     )
       yield put(fetchTransactionDetailSuccess(res.data.Result));
-    // yield put(fetchTransactionDetailFailure(res.data.Result));
+    else yield put(fetchTransactionDetailFailure({ error: res.data.Result }));
   } catch (err) {
     yield put(
       fetchTransactionDetailFailure({

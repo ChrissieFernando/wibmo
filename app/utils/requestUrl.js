@@ -31,7 +31,10 @@ export const BANK_LIST_API = `${UAT_ACSDEMO_URL_BASE}/admin/report/v1/fetch_bank
 export const RBA_CONFIG = id =>
   `${UAT_ACSDEMO_URL_BASE}/admin/report/v1/issuer_config/${id}/RBA/DEFAULT`;
 
-export const RBA_API = `${SAS_ADMIN_URL_BASE}/admin/report/v1/update-rba-script/doUpdateRBAScript`;
+export const RBA_API = {
+  url: `${SAS_ADMIN_URL_BASE}/admin/report/v1/update-rba-script/doUpdateRBAScript`,
+  method: 'POST',
+};
 
 export const GET_BANK_PRODUCTS = id =>
   `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/banks/${id}/products`;
