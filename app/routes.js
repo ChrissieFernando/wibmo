@@ -197,7 +197,7 @@ const routes = [
         component: ManageBank,
       },
       {
-        path: '/admin/dashboard/assign-screens-to-bank',
+        path: '/admin/dashboard/assign-screens-to-bank/:id',
         // auth: true,
         exact: true,
         component: AssignBank,
@@ -227,7 +227,7 @@ const routes = [
         component: CreateGroup,
       },
       {
-        path: '/admin/dashboard/editgroup',
+        path: '/admin/dashboard/editgroup/:groupId',
         // auth: true,
         exact: true,
         component: EditGroup,

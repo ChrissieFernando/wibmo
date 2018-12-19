@@ -80,7 +80,7 @@ export const BANK_EDIT_URL = id =>
 export const CREATE_GROUP_URL = `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/createGroup`;
 
 export const EDIT_GROUP_URL = id =>
-  `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/${id}/updategroup`;
+  `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/${id}/updateGroup`;
 
 export const GET_GROUP_PERMISSIONS = id =>
   `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/${id}/getGroupPermissions`;

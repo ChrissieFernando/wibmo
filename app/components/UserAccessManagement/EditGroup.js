@@ -34,6 +34,7 @@ class HomePage extends Component {
       title: '',
       errorType: '',
     };
+    this.previousData = {};
   }
 
   execute = Json => {
@@ -140,6 +141,16 @@ class HomePage extends Component {
           key: 'Permissions',
         },
       ]);
+
+      this.previousData = {
+        group_name: res.data.groupName,
+        bank_id: res.data.bankId,
+        product_id: res.data.productId,
+        permissions: res.data.permission,
+        status: 'Active',
+        created_by: 'Kiran',
+      };
+
       this.execute(jsonSchema);
     });
   }
@@ -150,13 +161,40 @@ class HomePage extends Component {
     // TODO: Add other auth dependent params
     // TODO: Move URL to config
 
+    // const PAYLOAD = {
+    //   group_name: formData.GroupName,
+    //   bank_id: formData.BankName,
+    //   product_id: formData.Products,
+    //   permissions: formData.Permissions,
+    //   status: 'Active',
+    //   // created_by: "panditji"
+    // };
+
     const PAYLOAD = {
-      group_name: formData.GroupName,
-      bank_id: formData.BankName,
-      product_id: formData.Products,
-      permissions: formData.Permissions,
-      status: 'Active',
-      // created_by: "panditji"
+      uuid: '0003',
+      bank_id: 8111,
+      maker_id: 'adminaxis',
+      product_id: 1,
+      bankCode: 'HDFC',
+      bankName: 'HDFC BANK',
+      productCode: 'ACS',
+      screen_id: 123,
+      previousDataJson: this.previousData,
+      newDataJson: {
+        login_id: 'Shivnath@wibmo.com',
+        group_name: formData.GroupName,
+        bank_id: formData.BankName,
+        product_id: formData.Products,
+        listOfPermissionIds: formData.Permissions,
+        status: 'Active',
+        created_by: 'Kiran',
+      },
+      listOfPermissionIds: formData.Permissions,
+      status: 'active',
+      checker_id: '',
+      comments: 'Inserting maker checker',
+      makerCheckerEnabled: 'Inactive',
+      ENTITY_ACTION: 'CREATE_GROUP',
     };
 
     // const PAYLOAD = {

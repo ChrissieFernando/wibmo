@@ -14,12 +14,13 @@ class AssignUserToGroup extends Component {
   componentDidMount() {}
 
   render() {
-    const { ProfileData, GlobalData } = this.props;
+    const { ProfileData, GlobalData, match } = this.props;
     return (
       <EditGroup
         jsonSchema={Schema}
         ProfileData={ProfileData}
         GlobalData={GlobalData}
+        match={match}
       />
     );
   }
@@ -35,6 +36,7 @@ const withConnect = connect(mapStateToProps);
 AssignUserToGroup.propTypes = {
   ProfileData: PropTypes.object.isRequired,
   GlobalData: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 export default compose(withConnect)(AssignUserToGroup);
