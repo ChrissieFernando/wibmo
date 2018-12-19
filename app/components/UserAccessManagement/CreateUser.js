@@ -103,6 +103,10 @@ class HomePage extends Component {
     });
   };
 
+  componentWillUnmount() {
+    this.endNotification();
+  }
+
   form = formData => {
     // eslint-disable-next-line no-console
 

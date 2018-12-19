@@ -24,6 +24,7 @@ import wibmo from '../../images/Wibmo-Logo.png';
 import slider from '../../images/slider-img.png';
 import Button from '../../components/common/Button';
 import Input from '../../components/common/Input';
+import Notification from '../../components/common/notification';
 
 class Login extends Component {
   state = {
@@ -118,14 +119,20 @@ class Login extends Component {
       !props.success
     ) {
       if (props && !props.success && props.loginData.code === 305) {
-        /**
-         * @todo notification
-         */
+        return {
+          loading: false,
+          lastFetched: props.loginData.lastFetched,
+          show: true,
+          title: props.loginData.error,
+        };
       }
       if (props && !props.success && props.loginData.code === 404) {
-        /**
-         * @todo notification
-         */
+        return {
+          loading: false,
+          lastFetched: props.loginData.lastFetched,
+          show: true,
+          title: 'Internal Server Error',
+        };
       }
       return {
         loading: false,
@@ -146,10 +153,29 @@ class Login extends Component {
     return {};
   }
 
+  endCallback = () => {
+    this.setState({
+      show: false,
+    });
+  };
+
+  componentWillUnmount() {
+    this.setState({
+      show: false,
+    });
+  }
+
   render() {
     return (
       <React.Fragment>
         <div className="login">
+          <Notification
+            title={this.state.title}
+            show={this.state.show}
+            type="danger"
+            position
+            endCallback={this.endCallback}
+          />
           <div className="columns is-gapless ">
             <div className="column login__left">
               <div className="login__header">

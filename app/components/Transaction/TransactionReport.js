@@ -22,6 +22,7 @@ import Input from '../common/Input';
 import Header from '../common/Header';
 import Sidebar from '../common/sidenav';
 import QueryParamDecoder from '../../utils/Common/QueryParamsDecoder';
+import Notification from '../common/notification';
 const $ = require('jquery');
 /* eslint-disable */
 React.PropTypes = require('prop-types');
@@ -75,6 +76,7 @@ class Transaction extends Component {
         'SINGLE SELECT',
         'MULTIPLE SELECT',
       ],
+      show: false,
       merchantID: [],
       transaction: { ...Config['default'] },
       date: {
@@ -133,17 +135,21 @@ class Transaction extends Component {
 
   fetchReportSubmit = () => {
     if (!this.props.globalData.bank_id) {
-      /**
-       * @todo Notification
-       */
+      this.setState({
+        type: 'danger',
+        show: true,
+        title: 'Please select a bank',
+      });
       return;
     } else if (
       !this.props.globalData.date.from ||
       !this.props.globalData.date.to
     ) {
-      /**
-       * @todo Notification
-       */
+      this.setState({
+        type: 'danger',
+        show: true,
+        title: 'Invalid From Date or To Date',
+      });
       return;
     }
     this.setState({
@@ -178,21 +184,21 @@ class Transaction extends Component {
     if (
       state.lastFetched !== props.transaction.lastFetched &&
       props.transaction.error &&
-      state.initial &&
+      // state.initial &&
       !props.transaction.empty
     ) {
-      /**
-       * @todo Notification
-       */
       return {
         fetchReport: true,
         loading: false,
+        type: 'danger',
+        show: true,
+        title: props.transaction.error,
         lastFetched: props.transaction.lastFetched,
       };
     }
     if (
       state.lastFetched !== props.transaction.lastFetched &&
-      state.initial &&
+      // state.initial &&
       !props.transaction.empty &&
       props.transaction.transaction.length > 0
     ) {
@@ -204,7 +210,7 @@ class Transaction extends Component {
     }
     if (
       state.lastFetched !== props.transaction.lastFetched &&
-      state.initial &&
+      // state.initial &&
       !props.transaction.empty
     ) {
       return {
@@ -278,6 +284,7 @@ class Transaction extends Component {
         endDate: moment(),
         startDate: moment().subtract(30, 'minutes'),
         endDate: moment(),
+        show: false,
         transaction: {
           bank_name: 'State Bank of India',
           transaction_type: [],
@@ -321,12 +328,31 @@ class Transaction extends Component {
     //   });
     // }, 1000);
   }
+
+  endCallback = () => {
+    this.setState({
+      show: false,
+    });
+  };
+  
+  componentWillUnmount() {
+    this.setState({
+      show: false,
+    });
+  }
+
   render() {
     return (
       <div className="main" onClick={() => this.setState({ dropdown: {} })}>
-       <Header history={this.props.history} /> 
+        <Header history={this.props.history} />
+        <Notification
+          title={this.state.title}
+          show={this.state.show}
+          type={this.state.type}
+          endCallback={this.endCallback}
+        />
         <div className="main__body">
-        <Sidebar history={this.props.history} /> 
+          <Sidebar history={this.props.history} />
           <div className="main__wrapper">
             <div className="page">
               <div className="page__content">

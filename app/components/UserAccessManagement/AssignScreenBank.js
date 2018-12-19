@@ -228,16 +228,14 @@ class HomePage extends Component {
     }
   };
 
-  endCallback() {
+  endCallback = () => {
     this.setState({
       show: false,
     });
-  }
+  };
 
-  notify() {
-    this.setState({
-      show: true,
-    });
+  componentWillUnmount() {
+    this.endCallback();
   }
 
   render() {
@@ -247,7 +245,6 @@ class HomePage extends Component {
           title="Please Fill all the required fields"
           show={this.state.show}
           type="danger"
-          notify={this.notify}
           endCallback={this.endCallback}
         />
         <Header />

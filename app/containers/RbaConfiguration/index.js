@@ -133,6 +133,12 @@ class HomePage extends Component {
       });
   };
 
+  componentWillUnmount() {
+    this.setState({
+      show: false,
+    });
+  }
+
   render() {
     return (
       <div className="main">

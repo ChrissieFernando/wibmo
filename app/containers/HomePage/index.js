@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Header from '../../components/common/Header';
 import Sidebar from '../../components/common/sidenav';
 import Footer from '../../components/common/footer';
-import NoConfig from '../../images/alert-decagram.svg';
+// import NoConfig from '../../images/alert-decagram.svg';
 class HomePage extends PureComponent {
   render() {
     return (
@@ -24,10 +24,10 @@ class HomePage extends PureComponent {
                     </div>
                   </div>
                 </div>
-                <div className="page__noconfig">
+                {/**  <div className="page__noconfig">
                   <img src={NoConfig} />
                   <div className="page__text">No Configuration Available</div>
-                </div>
+                </div> */}
               </div>
             </div>
             <Footer />

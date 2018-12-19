@@ -21,7 +21,6 @@ import {
   mdiPlusCircleOutline,
 } from '@mdi/js';
 import Axios from 'axios';
-import Notification from 'antd/lib/notification';
 import Button from '../common/Button';
 import Header from '../common/Header';
 import Sidebar from '../common/sidenav';
@@ -32,14 +31,9 @@ import {
   RREQ_API,
 } from '../../utils/requestUrl';
 import QueryDecoder from '../../utils/Common/QueryParamsDecoder';
+import Notification from '../common/notification';
 import Footer from '../common/footer';
 
-const openNotificationWithIcon = (type, description) => {
-  Notification[type]({
-    ...description,
-    duration: 3,
-  });
-};
 class TransactionDetails extends Component {
   constructor(props) {
     super(props);
@@ -92,6 +86,7 @@ class TransactionDetails extends Component {
   rreq = type => {
     this.setState({
       TransactionJson: {},
+      show: false,
     });
     let url = '';
     if (type === 'areq') url = AREQ_API;
@@ -123,28 +118,45 @@ class TransactionDetails extends Component {
       },
     ).then(res => {
       if (res.data['Response-Code'] == '200') {
-        Notification.destroy();
-        openNotificationWithIcon('success', {
-          message: 'Successfully Fetched',
-          // description: ""
-        });
         this.setState({
+          Nottype: 'success',
+          show: true,
+          title: 'Successfully Fetched',
           TransactionJson: res.data.Result,
         });
       } else {
-        Notification.destroy();
-        openNotificationWithIcon('error', {
-          message: 'Fetch Failed',
-          description: res.data.Result,
+        this.setState({
+          Nottype: 'danger',
+          show: true,
+          title: res.data.Result,
         });
       }
     });
   };
 
+  endCallback = () => {
+    this.setState({
+      show: false,
+    });
+  };
+
+  componentWillUnmount() {
+    this.setState({
+      show: false,
+    });
+  }
+
   render() {
     return (
       <div className="main">
         <Header history={this.props.history} />
+        <Notification
+          title={this.state.title}
+          show={this.state.show}
+          type={this.state.Nottype}
+          position
+          endCallback={this.endCallback}
+        />
         <div className="main__body">
           <Sidebar history={this.props.history} />
           <div className="main__wrapper">
