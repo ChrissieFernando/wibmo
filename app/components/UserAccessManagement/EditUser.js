@@ -110,6 +110,10 @@ class HomePage extends Component {
     });
   };
 
+  componentWillUnmount() {
+    this.endNotification();
+  }
+
   componentDidMount() {
     const { jsonSchema } = this.props;
     const Json = { ...jsonSchema };

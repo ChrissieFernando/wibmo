@@ -35,7 +35,7 @@ export function* loginGenerator(payload) {
         payload: {
           code: 305,
           profile: {},
-          error: null,
+          error: options.data.responseDesc,
           success: false,
         },
       });

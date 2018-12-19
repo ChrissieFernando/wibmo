@@ -242,6 +242,10 @@ class HomePage extends Component {
     });
   };
 
+  componentWillUnmount() {
+    this.endNotification();
+  }
+
   submit = e => {
     this.myRef.current.onSubmit(e);
   };

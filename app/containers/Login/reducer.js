@@ -21,6 +21,7 @@ const initialState = {
     error: null,
     date: {},
   },
+  error: null,
 };
 export default function loginReducer(state = initialState, action) {
   switch (action.type) {

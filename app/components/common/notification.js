@@ -22,7 +22,7 @@ export default class Notification extends Component {
         return {
           show: false,
         };
-      }, 4000);
+      }, 3000);
     }
 
     return {
@@ -41,6 +41,11 @@ export default class Notification extends Component {
           <div
             onClick={() => this.props.endCallback()}
             className="alert alert-modify"
+            style={{
+              position: this.props.position ? 'absolute' : 'inherit',
+              top: this.props.position ? 67 : 'inherit',
+              zIndex: this.props.position ? 1000 : 'inherit',
+            }}
           >
             <div className={this.state.class}>{this.state.title}</div>
           </div>
@@ -53,5 +58,6 @@ export default class Notification extends Component {
 Notification.propTypes = {
   // type: PropTypes.string,
   // title: PropTypes.string,
+  position: PropTypes.bool,
   endCallback: PropTypes.func,
 };
