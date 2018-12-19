@@ -92,3 +92,6 @@ export const GET_USER_BY_ID = id =>
   `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/users/${id}/getBankUserById`;
 
 export const GET_ALL_BANKS = `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/banks`;
+
+export const GET_ALL_USERS_BANK = id =>
+  `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/users/${id}/getBankUsers?limit=11&skip=10`;

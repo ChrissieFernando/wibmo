@@ -15,15 +15,15 @@ import RbaConfiguration from './containers/RbaConfiguration';
 import TransactionDetail from './containers/Transaction/TransactionDetail';
 import CreateBank from './containers/UserAccessManagement/CreateBank';
 import EditBank from './containers/UserAccessManagement/EditBank';
-// import ManageBank from './components/ManageBank';
+import ManageBank from './containers/UserAccessManagementList/ManageBank';
 import AssignBank from './containers/UserAccessManagement/AssignScreenBank';
 import EditAssignBank from './containers/UserAccessManagement/EditAssignScreenBank';
 import CreateUser from './containers/UserAccessManagement/CreateUser';
 import EditUser from './containers/UserAccessManagement/EditUser';
-// import ManageUser from './components/ManageUser';
+import ManageUser from './containers/UserAccessManagementList/ManageUsers';
 import CreateGroup from './containers/UserAccessManagement/CreateGroup';
 import EditGroup from './containers/UserAccessManagement/EditGroup';
-// import ManageGroup from './components/ManageGroup';
+import ManageGroup from './containers/UserAccessManagementList/ManageGroup';
 import AssignGroup from './containers/UserAccessManagement/AssignUserGroup';
 import EditAssignGroup from './containers/UserAccessManagement/EditAssignUserGroup';
 // import BankUsrCreateUser from './components/bank-user-admin/BankUsrCreateUser';
@@ -190,12 +190,12 @@ const routes = [
         exact: true,
         component: EditBank,
       },
-      //     {
-      //       path: '/admin/dashboard/managebank',
-      //       // auth: true,
-      //       exact: true,
-      //       component: ManageBank,
-      //     },
+      {
+        path: '/admin/dashboard/managebank',
+        // auth: true,
+        exact: true,
+        component: ManageBank,
+      },
       {
         path: '/admin/dashboard/assign-screens-to-bank',
         // auth: true,
@@ -214,12 +214,12 @@ const routes = [
         exact: true,
         component: EditUser,
       },
-      //     {
-      //       path: '/admin/dashboard/manageuser',
-      //       // auth: true,
-      //       exact: true,
-      //       component: ManageUser,
-      //     },
+      {
+        path: '/admin/dashboard/manageuser',
+        // auth: true,
+        exact: true,
+        component: ManageUser,
+      },
       {
         path: '/admin/dashboard/creategroup',
         // auth: true,
@@ -238,12 +238,12 @@ const routes = [
         exact: true,
         component: AssignGroup,
       },
-      //     {
-      //       path: '/admin/dashboard/managegroup',
-      //       // auth: true,
-      //       exact: true,
-      //       component: ManageGroup,
-      //     },
+      {
+        path: '/admin/dashboard/managegroup',
+        // auth: true,
+        exact: true,
+        component: ManageGroup,
+      },
       {
         path: '/admin/dashboard/edit-assign-users-to-group',
         // auth: true,
