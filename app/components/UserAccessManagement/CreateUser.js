@@ -111,16 +111,57 @@ class HomePage extends Component {
 
     // TODO: Remove hardcode data
 
+    // const PAYLOAD = {
+    //   USER_ID: formData.LoginID,
+    //   BANK_ID: '8111',
+    //   USER_PASSWORD: '',
+    //   TEL_COUNTRY_CODE: formData.MobileCode,
+    //   TEL_MOBILE: formData.MobileNumber,
+    //   EMAIL: formData.EmailID,
+    //   FIRST_NAME: formData.FirstName,
+    //   LAST_NAME: formData.LastName,
+    //   STATUS: formData.Status,
+    // };
+
     const PAYLOAD = {
-      USER_ID: formData.LoginID,
-      BANK_ID: '8111',
-      USER_PASSWORD: '',
-      TEL_COUNTRY_CODE: formData.MobileCode,
-      TEL_MOBILE: formData.MobileNumber,
-      EMAIL: formData.EmailID,
-      FIRST_NAME: formData.FirstName,
-      LAST_NAME: formData.LastName,
-      STATUS: formData.Status,
+      uuid: '0003',
+      bank_id: 8111,
+      maker_id: 'adminaxis',
+      product_id: 1,
+      bankCode: 'HDFC',
+      bankName: 'HDFC BANK',
+      productCode: 'ACS',
+      screen_id: 123,
+      previousDataJson: {},
+      newDataJson: {
+        token_id: 'auth007',
+        login_id: 'Shivnath@wibmo.com',
+        USER_ID: formData.LoginID,
+        BANK_ID: '8111',
+        USER_PASSWORD: '',
+        TEL_COUNTRY_CODE: formData.MobileCode,
+        TEL_MOBILE: formData.MobileNumber,
+        EMAIL: formData.EmailID,
+        FIRST_NAME: formData.FirstName,
+        LAST_NAME: formData.LastName,
+        STATUS: formData.Status,
+        userBankList: [
+          {
+            bank_id: 8111,
+            bank_name: 'adiba Bank',
+          },
+          {
+            bank_id: 7111,
+            bank_name: 'Abc Bank',
+          },
+        ],
+      },
+      status: 'active',
+      checker_id: '',
+      comments: 'Inserting maker checker',
+      // makerCheckerEnabled: "Inactive",
+      makerCheckerEnabled: 'Active',
+      ENTITY_ACTION: 'CREATE_GROUP',
     };
 
     Axios.post(CREATE_USER_URL(1000), PAYLOAD)

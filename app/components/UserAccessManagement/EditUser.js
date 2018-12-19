@@ -50,16 +50,18 @@ class HomePage extends Component {
                 id: bank.bank_id,
                 title: bank.bankName,
               }));
-            if (urldata.key === 'BankList')
-              return (
-                response.data.listOfBank
-                  .filter(data => data.bankParentId === 1000)
-                  // .map(data => console.log(data))
-                  .map(bank => ({
-                    id: bank.bank_id,
-                    title: bank.bankName,
-                  }))
-              );
+            if (urldata.key === 'BankList') {
+              const bankdata = response.data.listOfBank
+                .filter(data => data.bankParentId === 1000)
+                // .map(data => console.log(data))
+                .map(bank => ({
+                  id: bank.bank_id,
+                  title: bank.bankName,
+                }));
+              return bankdata.length
+                ? bankdata
+                : [{ id: '', title: 'NO BANKS AVAILABLE' }];
+            }
             return response.data.map(other => ({
               id: other.title,
               title: other.title,
@@ -194,16 +196,57 @@ class HomePage extends Component {
     // TODO: Add other auth dependent params
     // TODO: Move URL to config
 
+    // const PAYLOAD = {
+    //   USER_ID: formData.LoginID,
+    //   BANK_ID: '8111',
+    //   USER_PASSWORD: '',
+    //   TEL_COUNTRY_CODE: formData.MobileCode,
+    //   TEL_MOBILE: formData.MobileNumber,
+    //   EMAIL: formData.EmailID,
+    //   FIRST_NAME: formData.FirstName,
+    //   LAST_NAME: formData.LastName,
+    //   STATUS: 'Active',
+    // };
+
     const PAYLOAD = {
-      USER_ID: formData.LoginID,
-      BANK_ID: '8111',
-      USER_PASSWORD: '',
-      TEL_COUNTRY_CODE: formData.MobileCode,
-      TEL_MOBILE: formData.MobileNumber,
-      EMAIL: formData.EmailID,
-      FIRST_NAME: formData.FirstName,
-      LAST_NAME: formData.LastName,
-      STATUS: 'Active',
+      uuid: '0003',
+      bank_id: 8111,
+      maker_id: 'adminaxis',
+      product_id: 1,
+      bankCode: 'HDFC',
+      bankName: 'HDFC BANK',
+      productCode: 'ACS',
+      screen_id: 123,
+      previousDataJson: {},
+      newDataJson: {
+        token_id: 'auth007',
+        login_id: 'Shivnath@wibmo.com',
+        USER_ID: formData.LoginID,
+        BANK_ID: '8111',
+        USER_PASSWORD: '',
+        TEL_COUNTRY_CODE: formData.MobileCode,
+        TEL_MOBILE: formData.MobileNumber,
+        EMAIL: formData.EmailID,
+        FIRST_NAME: formData.FirstName,
+        LAST_NAME: formData.LastName,
+        STATUS: formData.Status,
+        userBankList: [
+          {
+            bank_id: 8111,
+            bank_name: 'adiba Bank',
+          },
+          {
+            bank_id: 7111,
+            bank_name: 'Abc Bank',
+          },
+        ],
+      },
+      status: 'active',
+      checker_id: '',
+      comments: 'Inserting maker checker',
+      // makerCheckerEnabled: "Inactive",
+      makerCheckerEnabled: 'Active',
+      ENTITY_ACTION: 'CREATE_GROUP',
     };
 
     Axios.post(EDIT_USER_URL(8111), PAYLOAD)
@@ -255,15 +298,15 @@ class HomePage extends Component {
         {
           schema: {
             ...this.state.schema,
-            formData: { ...e.formData, Products: [] },
+            formData: { ...e.formData, BankList: [] },
             schema: {
               ...this.state.schema.schema,
               properties: {
                 ...e.schema.properties,
-                Products: {
-                  ...e.schema.properties.Products,
+                BankList: {
+                  ...e.schema.properties.BankList,
                   items: {
-                    ...e.schema.properties.Products.items,
+                    ...e.schema.properties.BankList.items,
                     enum: [''],
                     enumNames: ['Loading ....'],
                   },
@@ -276,12 +319,12 @@ class HomePage extends Component {
         () => {
           this.execute({
             ...this.state.schema,
-            formData: { ...e.formData, Products: [] },
+            formData: { ...e.formData, BankList: [] },
             api: [
               {
                 url: GET_ALL_BANKS,
                 type: 'multiselect',
-                key: 'Products',
+                key: 'BankList',
               },
             ],
           });

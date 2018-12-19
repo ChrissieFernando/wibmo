@@ -209,7 +209,7 @@ const routes = [
         component: CreateUser,
       },
       {
-        path: '/admin/dashboard/edituser',
+        path: '/admin/dashboard/edituser/:user_id',
         // auth: true,
         exact: true,
         component: EditUser,

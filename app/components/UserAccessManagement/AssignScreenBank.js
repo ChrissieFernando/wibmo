@@ -106,12 +106,12 @@ class HomePage extends Component {
       token_id: 'auth007',
       login_id: 'Kiran@wibmo.com',
 
-      bankName: formData.BankName,
+      bank_id: formData.BankName,
       product_id: formData.Products,
       screen_id: formData.Screens,
     };
 
-    Axios.post(ASSIGN_SCREENS_BANK_URL, PAYLOAD)
+    Axios.post(ASSIGN_SCREENS_BANK_URL(formData.BankName), PAYLOAD)
       .then(response => {
         if (response.status == 200 || response.status == 201) {
           if (response.data.responseCode == '200') {

@@ -11,7 +11,7 @@ export default {
       },
       Products: {
         title: 'Products',
-        type: 'string',
+        // type: 'string',
         enum: ['Select a bank to choose products'],
       },
       Screens: {
