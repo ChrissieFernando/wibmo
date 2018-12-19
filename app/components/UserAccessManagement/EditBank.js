@@ -40,6 +40,7 @@ class HomePage extends Component {
       loader: true,
     };
     this.submit = this.submit.bind(this);
+    this.previousData = {};
   }
 
   execute = json => {
@@ -99,6 +100,7 @@ class HomePage extends Component {
   // UNSAFE_componentWillReceiveProps(props) {}
   componentDidMount() {
     const { jsonSchema } = this.props;
+
     // eslint-disable-next-line react/prop-types
     const bankId = this.props.match.params.id;
     jsonSchema.api = [
@@ -115,6 +117,22 @@ class HomePage extends Component {
       .then(response => {
         if (response.status == 200 || response.status == 201) {
           if (response.data.responseCode == '200') {
+            // jsonSchema.formData = {
+            //   ParentEntityName:
+            //     (response.data.bankDetails &&
+            //       response.data.bankDetails.parentBankEntity) ||
+            //     '',
+            //   BankName:
+            //     response.data.bankDetails && response.data.bankDetails.bankName,
+            //   BankID:
+            //     response.data.bankDetails && response.data.bankDetails.bank_id,
+            //   // Currency: response.data.bankDetails,
+            //   // Buckets: response.data.bankDetails,
+            //   // BankLogoURL: response.data.bankDetails,
+            //   // Products: response.data.bankDetails
+            //   Products: ['1', '2'],
+            // };
+
             jsonSchema.formData = {
               ParentEntityName:
                 (response.data.bankDetails &&
@@ -124,12 +142,34 @@ class HomePage extends Component {
                 response.data.bankDetails && response.data.bankDetails.bankName,
               BankID:
                 response.data.bankDetails && response.data.bankDetails.bank_id,
+              BankCode:
+                response.data.bankDetails && response.data.bankDetails.bankCode,
+              Currency:
+                response.data.bankDetails &&
+                response.data.bankDetails.bankCurrency,
               // Currency: response.data.bankDetails,
-              // Buckets: response.data.bankDetails,
+              Buckets: 'ACS',
               // BankLogoURL: response.data.bankDetails,
               // Products: response.data.bankDetails
-              Products: ['1', '2'],
+              Products: [1, 2],
             };
+
+            this.previousData = {
+              token_id: 'auth007',
+              login_id: 'Shivnath@wibmo.com',
+              bankName:
+                response.data.bankDetails && response.data.bankDetails.bankName,
+              bankCode:
+                response.data.bankDetails && response.data.bankDetails.bankCode,
+              bank_id:
+                response.data.bankDetails && response.data.bankDetails.bank_id,
+              bucket: 'ACS',
+              bankCurrency:
+                response.data.bankDetails &&
+                response.data.bankDetails.bankCurrency,
+              product_id: [1, 2],
+            };
+
             this.execute(jsonSchema);
           } else {
             this.setState({
@@ -186,7 +226,7 @@ class HomePage extends Component {
       bankName: 'HDFC BANK',
       productCode: 'ACS',
       screen_id: 123,
-      previousDataJson: {},
+      previousDataJson: this.previousData,
       newDataJson: {
         token_id: 'auth007',
         login_id: 'Shivnath@wibmo.com',
@@ -337,6 +377,7 @@ class HomePage extends Component {
 
 HomePage.propTypes = {
   history: PropTypes.object,
+  match: PropTypes.object,
 };
 
 export default HomePage;

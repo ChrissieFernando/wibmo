@@ -15,6 +15,7 @@ import {
   GET_BANK_PRODUCTS,
   GET_BANK_SCREENS,
   ASSIGN_SCREENS_BANK_URL,
+  GET_ALL_BANKS,
 } from '../../utils/requestUrl';
 
 class HomePage extends Component {
@@ -96,22 +97,96 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    this.execute(this.props.jsonSchema);
+    // =============GET ALL THE BANKS==============
+    const bankIdMap = {};
+    const { jsonSchema } = this.props;
+    Axios.get(GET_ALL_BANKS)
+      .then(response => {
+        if (response.status == 200 || response.status == 201) {
+          if (response.data.responseCode == '200') {
+            response.data.listOfBank.map(data => {
+              bankIdMap[data.bank_id] = data.bankName;
+              return bankIdMap;
+            });
+            jsonSchema.formData = {
+              BankName:
+                response.data.listOfBank &&
+                bankIdMap[this.props.match.params.id],
+            };
+            jsonSchema.api = [
+              {
+                url: GET_BANK_PRODUCTS(this.props.match.params.id),
+                type: 'dropdown',
+                key: 'Products',
+              },
+            ];
+            this.execute(jsonSchema);
+          } else {
+            this.setState({
+              show: true,
+              title: response.data.responseDesc,
+              errorType: 'danger',
+            });
+          }
+        }
+      })
+      .catch(error => {
+        if (error.response.status === 500) {
+          this.setState({
+            show: true,
+            title: 'Internal Server Error',
+            errorType: 'danger',
+          });
+        }
+        if (error.response.status === 404) {
+          this.setState({
+            show: true,
+            title: 'Server Error',
+            errorType: 'danger',
+          });
+        }
+      });
   }
 
   // eslint-disable-next-line no-unused-vars
   form = formData => {
     // TODO: Remove the the login data
-    const PAYLOAD = {
-      token_id: 'auth007',
-      login_id: 'Kiran@wibmo.com',
+    // const PAYLOAD = {
+    //   token_id: 'auth007',
+    //   login_id: 'Kiran@wibmo.com',
 
-      bankName: formData.BankName,
-      product_id: formData.Products,
-      screen_id: formData.Screens,
+    //   bank_id: formData.BankName,
+    //   product_id: formData.Products,
+    //   screen_id: formData.Screens,
+    // };
+
+    const PAYLOAD = {
+      uuid: '0003',
+      bank_id: 8111,
+      maker_id: 'adminaxis',
+      product_id: 1,
+      bankCode: 'HDFC',
+      bankName: 'HDFC BANK',
+      productCode: 'ACS',
+      screen_id: 123,
+      previousDataJson: {},
+      newDataJson: {
+        login_id: 'Shivnath@wibmo.com',
+        token_id: 'auth007',
+
+        bank_id: formData.BankName,
+        product_id: formData.Products,
+        screen_id: formData.Screens,
+      },
+      listOfPermissionIds: formData.Permissions,
+      status: 'active',
+      checker_id: '',
+      comments: 'Inserting maker checker',
+      makerCheckerEnabled: 'Inactive',
+      ENTITY_ACTION: 'ASSIGN_BANK_SCREENS',
     };
 
-    Axios.post(ASSIGN_SCREENS_BANK_URL, PAYLOAD)
+    Axios.post(ASSIGN_SCREENS_BANK_URL(this.props.match.params.id), PAYLOAD)
       .then(response => {
         if (response.status == 200 || response.status == 201) {
           if (response.data.responseCode == '200') {
@@ -152,6 +227,7 @@ class HomePage extends Component {
   };
 
   change = e => {
+    console.log(e);
     if (e.formData.BankName !== this.state.bank_id && e.formData.BankName) {
       this.setState(
         {
@@ -217,7 +293,7 @@ class HomePage extends Component {
             formData: { ...e.formData, Screens: [] },
             api: [
               {
-                url: GET_BANK_SCREENS(e.formData.BankName),
+                url: GET_BANK_SCREENS(this.props.match.params.id),
                 type: 'multiselect',
                 key: 'Screens',
               },
@@ -319,4 +395,5 @@ export default HomePage;
 HomePage.propTypes = {
   jsonSchema: PropTypes.object,
   history: PropTypes.object,
+  match: PropTypes.object,
 };

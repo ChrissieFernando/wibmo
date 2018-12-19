@@ -185,8 +185,8 @@ const routes = [
         component: CreateBank,
       },
       {
-        path: '/admin/dashboard/editbank',
-        auth: true,
+        path: '/admin/dashboard/editbank/:id',
+        // auth: true,
         exact: true,
         component: EditBank,
       },
@@ -197,7 +197,7 @@ const routes = [
         component: ManageBank,
       },
       {
-        path: '/admin/dashboard/assign-screens-to-bank',
+        path: '/admin/dashboard/assign-screens-to-bank/:id',
         // auth: true,
         exact: true,
         component: AssignBank,
@@ -209,8 +209,8 @@ const routes = [
         component: CreateUser,
       },
       {
-        path: '/admin/dashboard/edituser',
-        auth: true,
+        path: '/admin/dashboard/edituser/:user_id',
+        // auth: true,
         exact: true,
         component: EditUser,
       },
@@ -227,8 +227,8 @@ const routes = [
         component: CreateGroup,
       },
       {
-        path: '/admin/dashboard/editgroup',
-        auth: true,
+        path: '/admin/dashboard/editgroup/:groupId',
+        // auth: true,
         exact: true,
         component: EditGroup,
       },

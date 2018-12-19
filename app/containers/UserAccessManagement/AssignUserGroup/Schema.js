@@ -6,12 +6,12 @@ export default {
       'GroupName',
       // "LastName",
       // "EmailID",
-      'BankName',
+      // 'BankName',
     ],
     properties: {
       GroupName: {
         title: 'Group Name',
-        type: 'string',
+        // type: 'string',
         // default: "A new Task"
       },
 
@@ -38,7 +38,7 @@ export default {
   uiSchema: {
     'ui:order': ['GroupName', 'BankName', 'Users', '*'],
     GroupName: {
-      'ui:widget': 'CustomTextWidget',
+      'ui:widget': 'CustomDropdownWidget',
       classNames: 'marginRight',
       'ui:options': {
         type: 'text',
@@ -52,6 +52,7 @@ export default {
       classNames: 'marginRight',
       'ui:options': {
         required: true,
+        disable: true,
       },
     },
     // multipleChoicesList: {

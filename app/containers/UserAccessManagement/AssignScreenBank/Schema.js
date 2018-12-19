@@ -6,12 +6,12 @@ export default {
     properties: {
       BankName: {
         title: 'Bank Name',
-        type: 'number',
+        type: 'string',
         // enum: ["RS", "US UAE", "UK", "FR"]
       },
       Products: {
         title: 'Products',
-        type: 'string',
+        // type: 'string',
         enum: ['Select a bank to choose products'],
       },
       Screens: {
@@ -38,10 +38,11 @@ export default {
       },
     },
     BankName: {
-      'ui:widget': 'CustomDropdownWidget',
+      'ui:widget': 'CustomTextWidget',
       classNames: 'marginRight',
       'ui:options': {
         required: true,
+        disable: true,
       },
     },
     // multipleChoicesList: {

@@ -40,7 +40,7 @@ export default {
       // },
       Currency: {
         title: 'Currency',
-        type: 'number',
+        // type: 'number',
         // enum: [356, 840, 978, 45, 5],
         enum: [356, 840, 978],
         enumNames: ['INR', 'USD', 'EUR'],

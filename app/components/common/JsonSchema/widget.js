@@ -283,7 +283,11 @@ export class CustomMultiSelectWidgetWithSearch extends React.Component {
             padding: '10px',
             marginTop: '10px',
             borderRadius: '3px',
-            color: this.props.options.enumOptions[0].value ? '' : 'black',
+            color:
+              this.props.options.enumOptions[0] &&
+              this.props.options.enumOptions[0].value
+                ? ''
+                : 'black',
             // backgroundColor: this.props.options.enumOptions[0].value
             //   ? ""
             //   : this.props.options.enumOptions[0].label === "Loading ...."
@@ -291,21 +295,22 @@ export class CustomMultiSelectWidgetWithSearch extends React.Component {
             //   : "#fb9d9d"
           }}
         >
-          {this.props.options.enumOptions[0].value && (
-            <div className="column ">
-              <Input
-                type="text"
-                placeholder="Search"
-                // inputType={this.props.rawErrors ? "invalid" : "primary"}
-                icon="secondary"
-                inputType="secondary"
-                labelType="secondary"
-                hasicon={<i className="fas fa-search" />}
-                onChange={e => this.setState({ search: e.target.value })}
-                margin="margin"
-              />
-            </div>
-          )}
+          {this.props.options.enumOptions[0] &&
+            this.props.options.enumOptions[0].value && (
+              <div className="column ">
+                <Input
+                  type="text"
+                  placeholder="Search"
+                  // inputType={this.props.rawErrors ? "invalid" : "primary"}
+                  icon="secondary"
+                  inputType="secondary"
+                  labelType="secondary"
+                  hasicon={<i className="fas fa-search" />}
+                  onChange={e => this.setState({ search: e.target.value })}
+                  margin="margin"
+                />
+              </div>
+            )}
           <div
             style={{
               maxHeight: '350px',
