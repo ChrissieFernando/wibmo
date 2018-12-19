@@ -80,7 +80,7 @@ class HomePage extends Component {
         }
       });
 
-    Axios.get(GET_BANK_USER_GROUP(5111))
+    Axios.get(GET_BANK_USER_GROUP(6777))
       .then(response => {
         if (response.status == 200 || response.status == 201) {
           // if (response.data.responseCode == "200") {
