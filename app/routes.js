@@ -185,7 +185,7 @@ const routes = [
         component: CreateBank,
       },
       {
-        path: '/admin/dashboard/editbank',
+        path: '/admin/dashboard/editbank/:id',
         // auth: true,
         exact: true,
         component: EditBank,

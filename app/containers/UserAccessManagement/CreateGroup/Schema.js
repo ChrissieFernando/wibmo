@@ -17,7 +17,7 @@ export default {
 
       BankID: {
         title: 'Bank ID',
-        type: 'string',
+        type: 'number',
       },
       BankName: {
         title: 'Bank Name',
@@ -26,7 +26,7 @@ export default {
       },
       Products: {
         title: 'Products',
-        type: 'string',
+        // type: 'string',
         enum: [''],
         enumNames: ['Choose a bank first to select Products'],
       },
@@ -35,7 +35,7 @@ export default {
         title: 'Permissions List',
         // minItems: 2,
         items: {
-          type: 'string',
+          // type: 'string',
           enum: [''],
           enumNames: ['Select a Product to choose Permissions List'],
         },
@@ -59,7 +59,7 @@ export default {
       'ui:options': {
         type: 'text',
         // disable: true,
-        placeholder: 'first name',
+        placeholder: 'Group name',
       },
     },
     BankID: {

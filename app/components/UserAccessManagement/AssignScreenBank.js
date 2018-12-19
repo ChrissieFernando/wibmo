@@ -102,13 +102,39 @@ class HomePage extends Component {
   // eslint-disable-next-line no-unused-vars
   form = formData => {
     // TODO: Remove the the login data
-    const PAYLOAD = {
-      token_id: 'auth007',
-      login_id: 'Kiran@wibmo.com',
+    // const PAYLOAD = {
+    //   token_id: 'auth007',
+    //   login_id: 'Kiran@wibmo.com',
 
-      bank_id: formData.BankName,
-      product_id: formData.Products,
-      screen_id: formData.Screens,
+    //   bank_id: formData.BankName,
+    //   product_id: formData.Products,
+    //   screen_id: formData.Screens,
+    // };
+
+    const PAYLOAD = {
+      uuid: '0003',
+      bank_id: 8111,
+      maker_id: 'adminaxis',
+      product_id: 1,
+      bankCode: 'HDFC',
+      bankName: 'HDFC BANK',
+      productCode: 'ACS',
+      screen_id: 123,
+      previousDataJson: {},
+      newDataJson: {
+        login_id: 'Shivnath@wibmo.com',
+        token_id: 'auth007',
+
+        bank_id: formData.BankName,
+        product_id: formData.Products,
+        screen_id: formData.Screens,
+      },
+      listOfPermissionIds: formData.Permissions,
+      status: 'active',
+      checker_id: '',
+      comments: 'Inserting maker checker',
+      makerCheckerEnabled: 'Inactive',
+      ENTITY_ACTION: 'ASSIGN_BANK_SCREENS',
     };
 
     Axios.post(ASSIGN_SCREENS_BANK_URL(formData.BankName), PAYLOAD)

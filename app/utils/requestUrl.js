@@ -77,7 +77,7 @@ export const GET_BANK_BY_ID = id =>
 export const BANK_EDIT_URL = id =>
   `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/${id}/updateBank`;
 
-export const CREATE_GROUP_URL = `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/creategroup`;
+export const CREATE_GROUP_URL = `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/createGroup`;
 
 export const EDIT_GROUP_URL = id =>
   `${UAT_ACSDEMO_URL_BASE}/admin/uam/v1/groups/${id}/updategroup`;
