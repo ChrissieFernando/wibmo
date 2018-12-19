@@ -39,8 +39,8 @@ import EditAssignGroup from './containers/UserAccessManagement/EditAssignUserGro
 // import MakerDetail from './components/MakerDetail';
 // import Checker from './components/Checker';
 // import CheckerDetail from './components/CheckerDetail';
-// import MakersNcheckers from './components/MakersNcheckers';
-// import MakersNcheckersDetail from './components/MakersNcheckersDetail';
+import MakersNcheckers from './containers/MakerAndCheckers/MakerNChecker';
+import MakersNcheckersDetail from './containers/MakerAndCheckers/MakerNCheckerDetails';
 // import MakersNcheckersMdetail from './components/MakersNcheckersMdetail';
 // import Form from './components/jsonSchema/form';
 
@@ -115,20 +115,20 @@ const routes = [
   //   component: CheckerDetail,
   //   routes: [],
   // },
-  // {
-  //   path: '/makers-checkers',
-  //   // auth: true,
-  //   exact: true,
-  //   component: MakersNcheckers,
-  //   routes: [],
-  // },
-  // {
-  //   path: '/makers-checkers-details',
-  //   // auth: true,
-  //   exact: true,
-  //   component: MakersNcheckersDetail,
-  //   routes: [],
-  // },
+  {
+    path: '/makers-checkers',
+    // auth: true,
+    exact: true,
+    component: MakersNcheckers,
+    routes: [],
+  },
+  {
+    path: '/makers-checkers-details/:makerCheckerId',
+    // auth: true,
+    exact: true,
+    component: MakersNcheckersDetail,
+    routes: [],
+  },
   // {
   //   path: '/makers-checkers-mdetails',
   //   // auth: true,
@@ -180,19 +180,19 @@ const routes = [
       },
       {
         path: '/admin/dashboard/createbank',
-        // auth: true,
+        auth: true,
         exact: true,
         component: CreateBank,
       },
       {
         path: '/admin/dashboard/editbank',
-        // auth: true,
+        auth: true,
         exact: true,
         component: EditBank,
       },
       {
         path: '/admin/dashboard/managebank',
-        // auth: true,
+        auth: true,
         exact: true,
         component: ManageBank,
       },
@@ -204,31 +204,31 @@ const routes = [
       },
       {
         path: '/admin/dashboard/createuser',
-        // auth: true,
+        auth: true,
         exact: true,
         component: CreateUser,
       },
       {
         path: '/admin/dashboard/edituser',
-        // auth: true,
+        auth: true,
         exact: true,
         component: EditUser,
       },
       {
         path: '/admin/dashboard/manageuser',
-        // auth: true,
+        auth: true,
         exact: true,
         component: ManageUser,
       },
       {
         path: '/admin/dashboard/creategroup',
-        // auth: true,
+        auth: true,
         exact: true,
         component: CreateGroup,
       },
       {
         path: '/admin/dashboard/editgroup',
-        // auth: true,
+        auth: true,
         exact: true,
         component: EditGroup,
       },
@@ -240,7 +240,7 @@ const routes = [
       },
       {
         path: '/admin/dashboard/managegroup',
-        // auth: true,
+        auth: true,
         exact: true,
         component: ManageGroup,
       },

@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import Loader from 'react-loader-spinner';
 import Button from '../common/Button';
 import Header from '../common/Header';
-import Sidebar from '../common/Sidebar';
+import Sidebar from '../common/sidenav';
 import Footer from '../common/footer';
 import JsonForm from '../common/JsonSchema/form';
 import {
@@ -247,9 +247,9 @@ class HomePage extends Component {
     // console.log(this.state.schema);
     return (
       <div className="main">
-        <Header />
+        <Header history={this.props.history} />
         <div className="main__body">
-          <Sidebar />
+          <Sidebar history={this.props.history} />
           <div className="main__wrapper">
             <div className="page">
               <div className="page__header level">
@@ -322,4 +322,5 @@ class HomePage extends Component {
 export default HomePage;
 HomePage.propTypes = {
   jsonSchema: PropTypes.object,
+  history: PropTypes.object,
 };

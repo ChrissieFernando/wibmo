@@ -34,7 +34,7 @@ class Header extends Component {
       return {
         sidebar: _.groupBy(
           props.profile && props.profile.screens,
-          o => o.product_name,
+          o => o.productName,
         ),
       };
     return {};
@@ -129,13 +129,13 @@ class Header extends Component {
               </li>
               {this.props.Globals.sideMenu[index] && (
                 <ul className="sidebar__nav">
-                  {_.uniqBy(this.state.sidebar[value], e => e.screen_id).map(
+                  {_.uniqBy(this.state.sidebar[value], e => e.screenId).map(
                     (scr, key) => (
                       <li
                         key={`${key + 1}`}
                         className="sidebar__item"
                         onClick={e =>
-                          this.SideNavigation(scr.screen_id, index, key, e)
+                          this.SideNavigation(scr.screenId, index, key, e)
                         }
                       >
                         <a
@@ -155,9 +155,9 @@ class Header extends Component {
                           </div>
                           <div className="sidebar__tooltip sidenav-margin">
                             <Icon path={mdiMenuLeft} size={1} />
-                            <div className="text">{scr.screen_name}</div>
+                            <div className="text">{scr.screenName}</div>
                           </div>
-                          <span>{scr.screen_name}</span>
+                          <span>{scr.screenName}</span>
                         </a>
                       </li>
                     ),

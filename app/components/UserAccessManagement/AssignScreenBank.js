@@ -7,7 +7,7 @@ import Axios from 'axios';
 import PropTypes from 'prop-types';
 import Button from '../common/Button';
 import Header from '../common/Header';
-import Sidebar from '../common/Sidebar';
+import Sidebar from '../common/sidenav';
 import Footer from '../common/footer';
 import JsonForm from '../common/JsonSchema/form';
 import Notification from '../common/notification';
@@ -247,9 +247,9 @@ class HomePage extends Component {
           type="danger"
           endCallback={this.endCallback}
         />
-        <Header />
+        <Header history={this.props.history} />
         <div className="main__body">
-          <Sidebar />
+          <Sidebar history={this.props.history} />
           <div className="main__wrapper">
             <div className="page">
               <div className="page__header level">
@@ -318,4 +318,5 @@ class HomePage extends Component {
 export default HomePage;
 HomePage.propTypes = {
   jsonSchema: PropTypes.object,
+  history: PropTypes.object,
 };

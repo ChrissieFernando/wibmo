@@ -8,7 +8,7 @@ import Loader from 'react-loader-spinner';
 
 import Button from '../common/Button';
 import Header from '../common/Header';
-import Sidebar from '../common/Sidebar';
+import Sidebar from '../common/sidenav';
 import Footer from '../common/footer';
 import JsonForm from '../common/JsonSchema/form';
 // import Notification from "../components/common/notification";

@@ -11,7 +11,7 @@ import Loader from 'react-loader-spinner';
 import Button from '../common/Button';
 import JsonForm from '../common/JsonSchema/form';
 import Header from '../common/Header';
-import Sidebar from '../common/Sidebar';
+import Sidebar from '../common/sidenav';
 import Footer from '../common/footer';
 import Notification from '../common/notification';
 import { BANK_CREATE_URL, GET_BANK_PRODUCTS } from '../../utils/requestUrl';
@@ -287,11 +287,8 @@ class HomePage extends Component {
   }
 }
 
-HomePage.propTypes = {
-  history: PropTypes.object,
-};
-
 export default HomePage;
 HomePage.propTypes = {
   jsonSchema: PropTypes.object,
+  history: PropTypes.object,
 };
