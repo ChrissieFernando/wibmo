@@ -227,7 +227,6 @@ class HomePage extends Component {
   };
 
   change = e => {
-    console.log(e);
     if (e.formData.BankName !== this.state.bank_id && e.formData.BankName) {
       this.setState(
         {
@@ -317,13 +316,13 @@ class HomePage extends Component {
   render() {
     return (
       <div className="main">
+        <Header history={this.props.history} />
         <Notification
           title="Please Fill all the required fields"
           show={this.state.show}
           type="danger"
           endCallback={this.endCallback}
         />
-        <Header history={this.props.history} />
         <div className="main__body">
           <Sidebar history={this.props.history} />
           <div className="main__wrapper">

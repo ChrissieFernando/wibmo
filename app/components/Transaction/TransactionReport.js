@@ -334,7 +334,7 @@ class Transaction extends Component {
       show: false,
     });
   };
-  
+
   componentWillUnmount() {
     this.setState({
       show: false,
@@ -515,7 +515,8 @@ class Transaction extends Component {
                                   });
                               }}
                             >
-                              <span className="dropdown-trigger-item">
+                              <span className="dropdown-trigger-item" style={{color: this.props.globalData &&
+                                this.props.globalData.bank_name !== 'select' ? "black" : 'inherit', opacity: 0.75 }}>
                                 {this.props.globalData &&
                                   this.props.globalData.bank_name}
                               </span>

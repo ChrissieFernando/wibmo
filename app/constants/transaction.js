@@ -27,6 +27,10 @@ const data = {
     dropdown: [
       {
         key: '',
+        value: 'All',
+      },
+      {
+        key: '',
         value: 'ITP',
       },
       {
@@ -39,16 +43,16 @@ const data = {
       },
       {
         key: '',
-        value: 'All',
-      },
-      {
-        key: '',
         value: 'ING Bank',
       },
     ],
   },
   'Card Union': {
     dropdown: [
+      {
+        key: '',
+        value: 'All',
+      },
       {
         key: '',
         value: 'UPS',
@@ -65,14 +69,14 @@ const data = {
         key: '',
         value: 'Visa',
       },
-      {
-        key: '',
-        value: 'All',
-      },
     ],
   },
   'Card Type': {
     dropdown: [
+      {
+        key: '',
+        value: 'All',
+      },
       {
         key: '',
         value: 'Debit',
@@ -88,10 +92,6 @@ const data = {
       {
         key: '',
         value: 'Wallet',
-      },
-      {
-        key: '',
-        value: 'All',
       },
     ],
   },

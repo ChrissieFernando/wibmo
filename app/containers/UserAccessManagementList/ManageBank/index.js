@@ -46,11 +46,11 @@ class HomePage extends Component {
         if (response.status == 200 || response.status == 201) {
           if (response.data.responseCode == '200') {
             this.setState({
-              // show: true,
-              // title: "Success",
-              // errorType: "success",
+              show: true,
+              title: 'Success',
+              errorType: 'success',
               banks: [...response.data.listOfBank],
-              // isEditToastActive: false
+              isEditToastActive: false,
             });
           } else {
             this.setState({
@@ -110,11 +110,6 @@ class HomePage extends Component {
           endCallback={this.endNotification}
           notify={this.notify}
         />
-        <div className="alert">
-          <div className="notification is-success">
-            Your request has been submitted for approval.
-          </div>
-        </div>
         <div className="main__body">
           <Sidebar history={this.props.history} />
 

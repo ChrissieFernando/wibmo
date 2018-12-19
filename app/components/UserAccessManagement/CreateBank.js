@@ -91,12 +91,12 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    const { jsonSchema } = this.props;
+    const { jsonSchema, GlobalData } = this.props;
     const Json = { ...jsonSchema };
     Json.api = [
       {
         // TODO: Remove hardcoded data
-        url: GET_BANK_PRODUCTS(8111),
+        url: GET_BANK_PRODUCTS(GlobalData.bank_id),
         type: 'multiselect',
         key: 'Products',
       },
@@ -291,4 +291,5 @@ export default HomePage;
 HomePage.propTypes = {
   jsonSchema: PropTypes.object,
   history: PropTypes.object,
+  GlobalData: PropTypes.object,
 };
