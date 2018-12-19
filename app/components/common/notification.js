@@ -36,7 +36,7 @@ export default class Notification extends Component {
     return (
       <React.Fragment>
         {this.state.show && (
-          <div className="alert">
+          <div className="alert alert-modify">
             <div className={this.state.class}>{this.state.title}</div>
           </div>
         )}
