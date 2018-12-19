@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 const CLASSTYPE = {
   danger: 'notification is-danger',
   success: 'notification is-success',
@@ -36,7 +38,10 @@ export default class Notification extends Component {
     return (
       <React.Fragment>
         {this.state.show && (
-          <div className="alert alert-modify">
+          <div
+            onClick={() => this.props.endCallback()}
+            className="alert alert-modify"
+          >
             <div className={this.state.class}>{this.state.title}</div>
           </div>
         )}
@@ -48,5 +53,5 @@ export default class Notification extends Component {
 Notification.propTypes = {
   // type: PropTypes.string,
   // title: PropTypes.string,
-  // endCallback: PropTypes.func,
+  endCallback: PropTypes.func,
 };
